@@ -1,0 +1,3399 @@
+icon        "iconBanner.png"
+description "The Elysium Content Pack. A Huge collection of new lore, Monsters, Rituals, Spells, Terrains, Buildings, and More."
+
+#General - Modprio
+modprio 2
+
+#Initial Generic Start-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+#-------------------------<> Generic TerrGroup Start
+selectterrgroup -1100 #Frost Citadels
+setname "Frost Citadels"
+addterr 902
+addterr 139 #Fimbul Fortress
+
+selectterrgroup -1101 #Revertable to Plains terrain Structures
+setname "Gallows, Graveyards, Ruins, Coastal Hamlets, Iron Bogs"
+addterr 153 #Gallows
+addterr 248 #Small Graveyard
+addterr 16 #Graveyard
+addterr 184 #House Ruins
+addterr 190 #House Ruins
+addterr 191 #House Ruins
+addterr 192 #House Ruins
+addterr 193 #House Ruins
+addterr 185 #City Ruins
+addterr 78 #coastal hamlet
+addterr 97 #Iron Bog
+
+selectterrgroup -1102 #Swamp,Forest,Jungle Terrains
+setname "Swamp, Forest, Jungle like Terrains"
+addterr 2   #forest
+addterr 115 #Jungle
+addterr 107 #Swamp
+addterr 97 #Iron Bog
+addterr 901 #Witchwood Village
+addterr 4 #Ancient Forest
+addterr 314 #Recuperating Ancient Forest
+
+selectterrgroup -1103 #Revertable to Marshlands terrain
+setname "Gallows, Graveyards, Ruins, small settlements, and villages"
+addterr 153 #Gallows
+addterr 248 #Small Graveyard
+addterr 16 #Graveyard
+addterr 184 #House Ruins
+addterr 190 #House Ruins
+addterr 191 #House Ruins
+addterr 192 #House Ruins
+addterr 193 #House Ruins
+addterr 185 #City Ruins
+addterr 78 #coastal hamlet
+addterr 5 #farm
+addterr 6 #farm
+addterr 7 #Hamlet
+addterr 18 #village
+
+selectterrgroup -1104 #Dark and Infernal Citadels
+setname "Dark and Infernal Citadels"
+addterr 60 #Infernal Citadel
+addterr 61 # Infernal Citadel
+addterr 62 # Infernal Citadel
+addterr 63 # Infernal Citadel
+addterr 64 # Infernal Citadel
+addterr 65 # Infernal Citadel
+addterr 24 # Dark Citadel
+addterr 152 # Dark Citadel
+
+#-------------------------<> Generic TerrGroup End
+
+#-------------------------<> New Units Start
+#New Monsters with coupled rituals----->
+newritpow "Terraform Magic"
+
+newritual "Revert Fauna to Plains"
+level 1
+terr -10
+aiwhere -10
+aimaxcast 10
+nonearby1req -23 #citadels...doing this so they don't accidentally convert their home citadel
+descr "The Terraformer can revert a Swamp, Jungle, or Forest into a plain.^^Cannot be cast within 1 square distance of a citadel."
+start
+#cost 0 50
+#cost 1 30
+cost 0 0
+cost 1 0
+apcost 4
+planeloc 0
+alterloc 0
+free
+closewin
+
+newritual "Revert Settlement to Plains"
+level 1
+nonearby1req -23 #citadels
+terr -8
+aiwhere -8
+aimaxcast 8
+descr "The Terraformer can uses his powers to completely destroy villages and smaller human settlements, turning them into a flat plains.^^Cannot be cast within 1 square distance of a citadel."
+start
+cost 0 55
+cost 1 35
+apcost 4
+planeloc 0
+alterloc 0
+free
+closewin
+
+newritual "Revert Structure to Plains"
+level 1
+nonearby1req -23 #citadels
+terr -1101
+aiwhere -1101
+aimaxcast 8
+descr "The Terraformer can uses his powers to completely destroy Gallows, Graveyards, and Ruins turning them into a flat plains.^^Cannot be cast within 1 square distance of a citadel."
+start
+cost 0 55
+cost 1 35
+apcost 4
+planeloc 0
+alterloc 0
+free
+closewin
+
+newritual "Transform Mountain invert Plains"
+level 1
+nonearby1req -23 #citadels
+terr -5
+aiwhere -5
+aimaxcast 3
+descr "The Terraformer can uses his powers to completely transform a mountain range into flat lands.^^Cannot be cast within 1 square distance of a citadel."
+start
+cost 0 55
+cost 1 35
+apcost 12
+planeloc 0
+alterloc 0
+free
+closewin
+
+newmonster "Earthshaper"
+copyspr "Druid's Apprentice"
+hp 10
+str 3
+mor 4
+mr 3
+spellweapon 6 1 #Geomancy lvl1
+meleeweapon                0   1 # Dagger: d3 Pierce damage.
+nametype	14
+rank -1
+human
+descr "A mage who specializes in terraforming land to transform various non-mountainous terrains into flat and controlled landscapes."
+ironcarrier 25
+allitemslots
+power 0 1
+growtime 20
+
+newmonster "Earthshaper Master"
+copyspr "Druid's Apprentice"
+hp 13
+str 3
+mor 5
+mr 4
+spellweapon 6 2 #Geomancy lvl2
+meleeweapon                0   1 # Dagger: d3 Pierce damage.
+nametype	14
+rank -1
+human
+descr "A master mage who specializes in terraforming land to transform various non-mountainous terrains into flat and controlled landscapes."
+ironcarrier 25
+allitemslots
+power 0 1
+fast
+
+
+#-------------------------<> New Units End
+#Monsters ----->
+selectmonster "ice"
+inanimate
+
+#Weapons ----->
+newweapon     "dmg (Frost)"                                                     #  62
+trgrank              1 # Target: any enemy in range.
+range                0
+init                 6
+dmgtype              5 # Cold.
+dmg                  0 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+an                     # Armor negating.
+look                90
+#sound               39 # snow.sw (Frost)
+
+newweapon     "Frost Pike"                                                      #  22
+trgrank              1 # Target: front enemy (any enemy in range, preferring front-most).
+range                2
+init                 2
+dmgtype              3 # Pierce.
+dmg                  7 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+sound                1 # spear.smp (Spear)
+nextalwayswep      "dmg (Frost)" # Extra effect if target is hit: 697: Bane Fire.
+nextdmg              5 # d4 Magic damage.
+
+newweapon     "Frost Bow"                                                #  34
+trgrank              1 # Target: front enemy (any enemy in range, preferring front-most).
+range                5
+init                 2
+dmgtype              3 # Pierce.
+dmg                  3 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+mundane                # Non-magic. Ethereal units have a 75% chance to be unaffected.
+arrow                  # Can be negated by air shield.
+lob                    # Arcing trajectory.
+rangepen               # Does half damage if distance >= half range.
+flymode              1 # Missile sprite, one for each strike or square hit.
+flysound            14 # pil.smp (Bow)
+nextwep             "dmg (Frost)" # Extra effect if target is affected: 35: Frost.
+nextdmg              5 # d4 Frost damage.
+
+newweapon     "Summon Frost Queen's Frost Drake"                                           
+trgrank              1 # border square (for summoning)
+range                3
+init                 4
+dmgtype             18 # Summon (the monster specified in the weapon's name, after "Summon ").
+dmg                  0 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+an                     # Armor negating.
+look                 1
+sound               56 # digrydoo.smp
+
+newweapon     "Summon Yeti"                                           
+trgrank              1 # border square (for summoning)
+range                3
+init                 4
+dmgtype             18 # Summon (the monster specified in the weapon's name, after "Summon ").
+dmg                  0 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+an                     # Armor negating.
+look                 1
+sound               56 # digrydoo.smp
+
+selectweapon      "Ice Lance"                                                 # 768
+nextwep             "dmg (Frost)" # Extra effect if target is affected: 35: Frost.
+nextdmg              5 # d4 Frost damage.
+
+selectweapon     "Arcane Tempest"                                            # 116
+trgrank              9 # Target: any enemy in range.
+range                0
+init                 4
+dmgtype              2 # Blunt.
+dmg                  3 # Base damage (added to dmg value where this weapon is used).
+aoe                999 # Area: all enemy units.
+onlyenemy              # Only affects enemy units.
+look                26
+sound               66 # windshort.wav (Wind)
+nextwep            118 # Extra effect if target is affected: 118: aff (str-resistable).
+nextdmg             64 # Stun
+
+selectweapon     "Hail Storm"                                            # 116
+trgrank              0 # Target: self.
+range                0
+init                 4
+dmgtype              2 # Blunt.
+dmg                  0 # Base damage (added to dmg value where this weapon is used).
+aoe               999 # Area: all enemy units.
+flymode              3 # Fast particle effect, one for each strike or square hit.
+flysound            66 # windshort.wav (Wind)
+look               110
+sound                1 # spear.smp (Spear)
+# 0x7c               1 # Command 1
+# 0x80             -25 # Argument -25
+
+#forReference
+#newweapon     "Bane Fire Bow"                                             # 696
+#trgrank              1 # Target: front enemy (any enemy in range, preferring front-most).
+#range                5
+#init                 2
+#dmgtype              3 # Pierce.
+#dmg                  3 # Base damage (added to dmg value where this weapon is used).
+#aoe                  0 # Area: single target.
+#arrow                  # Can be negated by air shield.
+#lob                    # Arcing trajectory.
+#rangepen               # Does half damage if distance >= half range.
+#flymode              1 # Missile sprite, one for each strike or square hit.
+#flysound            14 # pil.smp (Bow)
+#nextalwayswep      697 # Extra effect if target is hit: 697: Bane Fire.
+#nextdmg              2 # d2 Magic damage.
+
+newweapon     "Frost Talon"                                                     #  94
+trgrank              1 # Target: front enemy (any enemy in range, preferring front-most).
+range                1
+init                 2
+dmgtype              1 # Slash.
+dmg                  0 # Base damage (added to dmg value where this weapon is used).
+aoe                  0 # Area: single target.
+mundane                # Non-magic. Ethereal units have a 75% chance to be unaffected.
+sound                1 # spear.smp (Spear)
+nextwep            175 # Extra effect if target is affected: 175: Cold.
+nextdmg              7 # d7 Cold damage.
+
+#Weapons End----->
+#Items Start----->
+selectitem "Necklace of the Winter Queen"
+#name "Necklace of the Frost Queen"
+rarity 1 #rare
+combatsum 1 "2d6*Winter Wolf"
+
+selectitem    "Divine Mantle"
+spellrange 2 #increases spell range by 2  
+
+newitem "Frost Queen's Neclace"
+copyspr "Necklace of the Winter Queen"
+rarity 3                                       #rareand unique
+type                                         7 # Misc Item.
+snow                                           # -1 AP to enter snow-covered squares.
+extracost 100
+pathboost                                   27 # Path Boost: Frost Magic + 1.
+pathboost                                   40 # Path Boost: Witch Magic + 1.
+pathboost                                   46 # Path Boost: Meladies Magic + 1.
+coldaura                                     2 # Frost Shield (2): Any enemy attacking this unit in melee will take some armor-negating cold damage.
+coldres                                    100 # +100 Cold Resistance.
+combatsum 1 "1d6*Winter Wolf & 1*Frost Queen's Frost Drake"
+
+
+
+#Items End----->
+
+#Initial Generic End-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+
+#Necromancer-----------------------------------------------------------------
+
+#Terrain ----->
+#2u - Necromancer
+selectterr 33 #Gold Stream
+name              "Gold Iron Stream" 
+gold              6 # Gold:  6
+iron              5 # Iron:  5
+
+selectterr 153 #gallows
+hands             5 # Hands:  5
+bonusrelics      -5 # Get -5 extra relics from this location. By default the amount of relics equals the amount of hands earned, with a minimum of 2 if this terrain is a temple.
+
+selectterr 147 #Ghost Village
+hands             3 # Hands:  3
+
+#todo tune t4 terrain for balance
+selectterr 900 #Sanctified Sepulcher
+name "Sanctified Sepulcher"
+spr "SanctifiedSepulcher.tga"
+ownable
+hands             50 # Hands:  6
+sacr              15
+apcost            2 # Action Point cost for moving through the terrain: 1
+desertok            # The terrain can appear in the southern portion of the map.
+snowok
+bonusrelics      -50 # Get -6 extra relics from this location. By default the amount of relics equals the amount of 
+tempimmune
+irongate            # The gate of the fort is iron
+batmap           3 # Battle map: highwall          
+#siegeable           # Siege weapons can be used in battles fought in this terrain square.
+rare
+dead              20 # The location starts with 20 * d6 corpses in it.
+temple
+ritrebate        25 # All rituals cast on this location will be 25% cheaper.
+
+#Monsters ---->
+selectmonster "Prince of Death"
+clearspec
+armor                          3 # Armor.
+hp                           111 # Hit Points.
+str                            8 # Strength.
+mor                           15 # Morale.
+mr                            10 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweapon               38   4 # Necromancy at level 4.
+spellweapon                1   3 # Infernal Magic at level 2.
+meleeweapon               11   0 # Fist: d12 Blunt damage.
+prebatweapon              40 265 # Summon Longdead: d40 units summoned.
+prebatweapon              40 266 # Summon Soulless: d40 units summoned.
+flying                          
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+diseaseres                       # Disease immunity.
+# res19                          # Combat Caster.
+demonic                          # Demonic; affected by banishment.
+allitemslots                      # all itemslots.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+reanimate                     10 # Automatically reanimate up to 10 corpses per month.
+unique                         1
+saner                         10 # Regains 10 sanity per month.
+ctrlchance                    15 # 15% chance to control this monster when summoned.  Overrides defctrl.
+homeplane                      5 # Hades.  Will return to this plane if slain outside it and be indep controlled again.
+reformloc                     65 # If killed, the monster will reform in a random instance of this terrain: Infernal Citadel.
+# fx98                        -1 # Unhandled trait 98 with argument -1.
+fear                           2 # Causes Dread (1d8 vs morale) within 2 squares.
+# fx405                        1 # Unhandled trait 405 with argument 1.
+revertowner                   28 # Player 28: Inferno.
+startitem  "Death"
+power 3  3 # Demonology, level 3.
+power 1 4 # Necromancy, level 4.
+#hpoverflow 1 #allows hp to overflow past max if they somehow gain more hp
+fast
+varregen 4
+spiritsight
+
+selectmonster "Demilich"
+clearspec
+clearmove 
+armor                          0 # Armor.
+hp                            15 # Hit Points.
+str                            7 # Strength.
+mor                           15 # Morale.
+mr                            10 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweaponbonus          38   3 # Necromancy at level 3.
+spellweaponbonus          38   3 # Necromancy at level 3.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+stationary                       # Cannot move on world map.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+spiritsight                      # Can see units with Stealth, Forest Stealth, or Invisible.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+immortal
+slashres                         # Slash resistance (half damage).
+pierceres                        # Pierce resistance (half damage).
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+nonmaginvul                      # Invulnerable to non-magical weapons.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+unaging                          # Immune to aging effects like decay.
+power                       1  4 # Necromancy, level 4.
+immortalap                     3 # When the monster dies, it costs 3 AP to respawn.
+saner                          7 # Regains 5 sanity per month.
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+reformloc                   1000 # If killed, the monster will reform in its home square.
+randomrare                   100 # 100% chance to spawn with a random rare magic item.
+teleport
+varregen 2 #regen 2%hp
+
+selectmonster "Wraith King"
+power                       1  3 # Necromancy, level 2.
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e. monster #54: Master of Darkness.
+allitemslots
+inanimate
+saner 2
+
+selectmonster "Ghost King"
+inanimate
+
+selectmonster "Demon Lord"
+spellweapon                3   4 # Pyromancy at level 4.
+spellweapon                1   4 # Infernal Magic at level 3.
+spellweapon                9   4 # Dark Magic at level 4.
+power 3  3 # Demonology, level 4.
+power 1 4 # Necromancy, level 4.
+allitemslots
+fast
+regeneration
+
+selectmonster "Bane Fire Archer"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Bane-Bones"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Abomination"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Mummy"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Armored Longdead"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Soulless Soldier"
+clearspec
+armor                          0 # Armor.
+hp                            13 # Hit Points.
+str                            5 # Strength.
+mor                           99 # Morale.
+mr                             1 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweapon                1   4 # Spear: d5 Pierce damage.
+slow                             # The monster only has 2 AP.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+pierceres                        # Pierce resistance (half damage).
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Armored Soulless"
+clearspec
+armor                          2 # Armor.
+hp                            15 # Hit Points.
+str                            5 # Strength.
+mor                           99 # Morale.
+mr                             1 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweapon                1   2 # Broadsword: d7 Slash damage.
+slow                             # The monster only has 2 AP.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+pierceres                        # Pierce resistance (half damage).
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Ghost Lord"
+saner 1
+
+selectmonster "Ghost King"
+saner 3
+
+selectmonster "Shade Mage"
+power 1 2
+saner 1
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e. monster #54: Master of Darkness.selectmonster "Demilich"
+clearspec
+clearmove 
+armor                          0 # Armor.
+hp                            15 # Hit Points.
+str                            7 # Strength.
+mor                           15 # Morale.
+mr                            10 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweaponbonus          38   3 # Necromancy at level 3.
+spellweaponbonus          38   3 # Necromancy at level 3.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+stationary                       # Cannot move on world map.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+spiritsight                      # Can see units with Stealth, Forest Stealth, or Invisible.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+immortal
+slashres                         # Slash resistance (half damage).
+pierceres                        # Pierce resistance (half damage).
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+nonmaginvul                      # Invulnerable to non-magical weapons.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+unaging                          # Immune to aging effects like decay.
+power                       1  4 # Necromancy, level 4.
+immortalap                     3 # When the monster dies, it costs 3 AP to respawn.
+saner                          7 # Regains 5 sanity per month.
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+reformloc                   1000 # If killed, the monster will reform in its home square.
+randomrare                   100 # 100% chance to spawn with a random rare magic item.
+teleport
+
+selectmonster "Wraith King"
+power                       1  3 # Necromancy, level 2.
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e. monster #54: Master of Darkness.
+allitemslots
+inanimate
+saner 2
+
+selectmonster "Ghost King"
+inanimate
+
+selectmonster "Demon Lord"
+spellweapon                3   4 # Pyromancy at level 4.
+spellweapon                1   4 # Infernal Magic at level 3.
+spellweapon                9   4 # Dark Magic at level 4.
+power 3  3 # Demonology, level 4.
+power 1 4 # Necromancy, level 4.
+allitemslots
+fast
+regeneration
+
+selectmonster "Bane Fire Archer"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Bane-Bones"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Abomination"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Mummy"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+selectmonster "Armored Longdead"
+healonterr -1104 #heals on Dark and Infernal Citidel 
+
+
+selectmonster "Ghost Lord"
+saner 1
+
+selectmonster "Ghost King"
+saner 3
+
+selectmonster "Shade Mage"
+power 1 2
+saner 1
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e. monster #54: Master of Darkness.
+
+#New Monsters ---->
+newmonster "Grave Digger"
+copyspr "Illusionist's Apprentice"                          #  297
+descr "A Necromancer Appretice student who was last in their class. A failure. As a failure, they are regulated to digging and robbing graves to prop up the Necromancer's army of undead."
+armor                          0 # Armor.
+hp                             3 # Hit Points.
+str                            2 # Strength.
+mor                            3 # Morale.
+mr                             5 # Magic Resistance.
+rank                          -1 # Back rank.
+meleeweapon                0   1 # Dagger: d3 Pierce damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+power                       1  1 # Necromancy, level 1.
+nametype                       4 # Germanic male.
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+classcost                     200 # Costs of all rituals + 200% of normal.
+
+newmonster "Tainted Carrion"
+copyspr "Carrion"
+copystats "Carrion"
+descr "The Tainted Carrion, a macabre and unsettling presence in the world of Elysium, is a creature that embodies the eerie and ominous aspects of our realm. It is a sinister amalgamation of decay and corruption, a sight that chills the heart and invokes revulsion among those who encounter it."
+hadesres 100
+fastheal                         # Heals all wounds in two months at most. Also heals permanent afflictions over time, but not as quickly as with regeneration.
+spiritsight
+fast
+
+newmonster "Tainted Ziz"
+copyspr "Ziz"
+descr "The Tainted Ziz is a Roc that has died and been reanimated by a tainted Necromantic ritual.  The beast is much more useful in its undead form, because it can now drop rocks where the Necromancer wants instead of dropping rocks on random humans. If left in the care of a powerful necromancer, the beast will eventually evolve into an Awakened Ziz."
+armor                          2 # Armor.
+hp                           130 # Hit Points.
+str                            9 # Strength.
+mor                           99 # Morale.
+mr                             7 # Magic Resistance.
+rank                           1 # Front rank.
+siegeweapon               60  98 # Drop Boulder: d60 Blunt damage.
+meleeweapon               21  11 # Bite: d21 Slash damage.
+flying                          
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+fastheal                         # Heals all wounds in two months at most. Also heals permanent afflictions over time, but not as quickly as with regeneration.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+shockres                     100 # Shock immunity.
+diseaseres                       # Disease immunity.
+pierceres                        # Pierce resistance (half damage).
+fear                             # Causes Fear (1d7 vs morale) in adjacent squares.
+rank                           1 # Front rank.
+spiritsight
+inanimate
+growtime 20
+
+newmonster "Awakened Ziz"
+copyspr "Ziz"
+descr "The Awakened Ziz, a creature both awe-inspiring and unnerving, embodies the paradoxes that define our world. Once a majestic being, it has returned from the clutches of death, its form now a luminous specter of its former splendor. Its towering presence casts a radiant glow across the land, and its ethereal appearance, marked by its skeletal frame and glowing eye sockets, leaves an indelible impression on all who encounter it. This enigmatic entity wields the sublime power of solar magic with absolute mastery, and its very existence testifies to the astounding depths of celestial power that can be harnessed. In its spectral presence, we witness both the beauty of its once-vibrant plumage, now imbued with radiant light, and the captivating wonder of its solar abilities."
+hp                           144 # Hit Points.
+str                           10 # Strength.
+armor                          3 # Armor.
+mr                             8 # Magic Resistance.
+mor                           99 # Morale.
+rank                           1 # Front rank.
+siegeweapon               60  98 # Drop Boulder: d60 Blunt damage.
+meleeweapon               21  11 # Bite: d21 Slash damage.
+flying                          
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+shockres                     100 # Shock immunity.
+diseaseres                       # Disease immunity.
+pierceres                        # Pierce resistance (half damage).
+fear                             # Causes Fear (1d7 vs morale) in adjacent squares.
+spiritsight
+fastheal                         # Heals all wounds in two months at most. Also heals permanent afflictions over time, but not as quickly as with regeneration.
+spellweapon               19   2 # Solar Magic at level 2.
+inanimate
+rank                           0 # Mid rank.
+
+newmonster "Necro Knight"
+copyspr "Death Knight"
+copystats "Death Knight"
+descr "The Necro Knight, a formidable and sinister figure in the world of Elysium, shares similarities with the infamous Death Knight. This unholy warrior is a fusion of dark magic and martial prowess, wielding both sword and sorcery to devastating effect. Clad in menacing obsidian armor, the Necro Knight's appearance is ominous and fearsome. Sinister runes adorn their accursed attire, pulsating with an unholy energy. A helm conceals their face, casting an air of eerie mystery. Each piece of their malevolent armor seems to have been forged from the very shadows themselves, radiating an otherworldly, spectral aura."
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e.
+
+newmonster "Demonic Necro Knight"
+copyspr "Demon Knight"
+descr "The Demonic Necro Knight is a solitary and enigmatic figure, often regarded as an outcast even among practitioners of dark magic. Their relentless quest for power and mastery over the forces of death is fueled by a shadowy and unfathomable purpose. Their allegiance is unwaveringly aligned with the forces of darkness and the dominion of the infernal."
+armor                          5 # Armor.
+hp                            55 # Hit Points.
+str                            8 # Strength.
+mor                            9 # Morale.
+mr                             8 # Magic Resistance.
+rank                           0 # Mid rank.
+spellweapon               38   2 # Necromancy at level 2.
+spellweapon               67   2 # destuction at level 2.
+meleeweaponspec           15  13 # Lance Charge: d15 Pierce damage.
+meleeweapon                6  20 # Mace: d11 Blunt damage.
+meleeweaponbonus           7  83 # Fiery Breath: d7 Fire damage.
+meleeweaponbonus           5  95 # Hoof: d5 Blunt damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+fear                             # Causes Fear (1d7 vs morale) in adjacent squares.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+pierceres                        # Pierce resistance (half damage).
+nobootslots                      # Has no boot slots.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+randomitem                    15 # 15% chance to spawn with a random magic item of any type.
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+saner                          3 # Regains 3 sanity per month.
+power                       1  2 # Necromancy, level 2.
+spiritsight
+
+newmonster    "Archlich of Undying Mastery"   
+spr1 "ArchlichOfUndyingMastery.tga"
+spr2 "ArchlichOfUndyingMastery2.tga"                                              
+armor                          2 # Armor.
+hp                            36 # Hit Points.
+str                            6 # Strength.
+mor                           15 # Morale.
+mr                            10 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweapon               38   4 # Necromancy at level 3.
+#spellweapon               38   4 # Necromancy at level 3.
+meleeweapon                2 501 # Touch of the Dead: d8 Cold damage.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+power                       1  4 # Necromancy, level 3.
+fast
+flying 
+spiritsight                      # Can see units with Stealth, Forest Stealth, or Invisible.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+fastheal                         # Heals all wounds in two months at most. Also heals permanent afflictions over time, but not as 
+immortal
+pierceres                        # Pierce resistance (half damage).
+allitemslots                     # Has the full set of item slots.
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+fireres                     -100 # 100 Fire Vulnerability.
+immortalap                     6 # When the monster dies, it costs 6 AP to respawn.
+saner                          7 # Regains 5 sanity per month.
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+reformloc                   1000 # If killed, the monster will reform in its home square.
+randommisc 100
+randomrare                   100 # 100% chance to spawn with a random rare magic item.
+descr "The Archlich of Undying Mastery is an eternal and malevolent entity, a pinnacle of necromantic power and an enduring symbol of death's inexorable dominion. The Archlich's form is a haunting testament to its immortality and unyielding mastery over necromantic arts. Its withered, yet undecayed husk is veiled in tattered, regal robes that have stood the test of time. Its eye sockets emit an eerie, malevolent glow, devoid of life yet radiating the wisdom of countless ages. The upper and lower lips, once susceptible to decay, remain locked in an eternal rictus grin."
+
+newmonster    "Archlich Residual Necromancy Husk"   
+copyspr "Archlich of Undying Mastery"
+armor                          1 # Armor.
+hp                            25 # Hit Points.
+str                            4 # Strength.
+mor                           10 # Morale.
+mr                            8 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweaponbonus                38   2 # Necromancy at level 2.
+spellweaponbonus                38   2 # Necromancy at level 2.
+meleeweapon                2 501 # Touch of the Dead: d8 Cold damage.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+stupid                       #Will move automatically like an independent units unless it is controlled by a player commander.
+undead
+likesterr -23 # Loves Citadels
+aggressive
+fast
+flying 
+spiritsight                      # Can see units with Stealth, Forest Stealth, or Invisible.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+fastheal                         # Heals all wounds in two months at most. Also heals permanent afflictions over time, but not as 
+pierceres                        # Pierce resistance (half damage).
+allitemslots                     # Has the full set of item slots.
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+fireres                     -100 # 100 Fire Vulnerability.
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+descr "In the enigmatic world of Elysium, the Archlich Residual Necromancy Husk stands as a haunting embodiment of the past, a body left behind in the shadow of a godly ascension. Once the vessel of an Archlich of Undying Mastery, it has now been severed from the pinnacle of power, its necromantic mastery reduced, yet it remains a vessel of unique significance. The Archlich Residual Necromancy Husk retains a semblance of its former self, albeit with an air of faded grandeur. Its withered form, still cloaked in tattered, regal robes, is now marked by the toll of its diminished mastery. Hollow eyes, once ablaze with the knowledge of death, now bear a solemn, haunting emptiness. Its movements are simple and hollow, lacking the vigor of its past existence."
+
+newmonster    "Abyssal Sovereign of Destruction"   
+spr1 "AbyssalSovereignOfDestruction.tga"
+spr2 "AbyssalSovereignOfDestruction2.tga"                                              
+armor                          4 # Armor.
+hp                            111 # Hit Points.
+str                            8 # Strength.
+mor                           15 # Morale.
+mr                            10 # Magic Resistance.
+rank                          -1 # Back rank.
+huge
+spellweaponbonus                38   4 # Necromancy at level 3.
+spellweaponbonus                67   3 # destuction at level 3.
+meleeweapon               10 800 # Flaming Fist: d16 Fire damage.
+prebatweapon              40 265 # Summon Longdead: d40 units summoned.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+fireres                      100 # Fire immunity.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+undead
+power                       1  4 # Necromancy, level 4.
+power                       3  1 # Demonology, level 1.
+fast
+flying
+planeshift                  1
+nametype                       40 # Demonic
+stealth
+farsight                       1 # Farsight: can see 1 square further than usual on the world map.
+spiritsight                      # Can see units with Stealth, Forest Stealth, or Invisible.
+sleepres                         # Sleep immunity.
+charmres                         # Charm immunity.
+diseaseres                       # Disease immunity.
+regeneration                     # Heals ~5% HP every combat round in battle. May rise from the dead if unit time, but not as 
+immortal
+pierceres                        # Pierce resistance (half damage).
+allitemslots                     # Has the full set of item slots.
+inanimate                        # Unaffected by life drain, pain, death, bleeding, healing, regeneration, etc.
+banishsurv                       # Banished to Hades/Inferno/home instead of being destroyed.
+immortalap                     6 # When the monster dies, it costs 6 AP to respawn.
+saner                          12 # Regains 5 sanity per month.
+voidsanity                    10 # Void Sanity: 10: reduces insanity gains (like armor).
+sensedead                      1 # Can sense the number of corpses of all types in current square.
+reformloc                   1000 # If killed, the monster will reform in its home square.
+randomrare                   100 # 100% chance to spawn with a random rare magic item.
+leadership                     2 # +2 Morale for units commanded by this unit.
+startitem "Pocket Lich"
+descr "In the mystical world of Elysium, the Abyssal Sovereign of Destruction embodies an entity of unmatched power in both necromancy and destructive magic. This divine Archlich has transcended mortal limitations, ascending to a godly state, wielding the forces of death and cataclysm in tandem. The Abyssal Sovereign's formidable presence is accentuated by its flowing black robe, a garment of dark majesty that sways like an omen of impending doom. Its hollow eye sockets blaze with eerie, ethereal flames, and its visage bears an eternal, ageless quality. Four resplendent wings, as black as the abyss, sprout from its back, evoking an image of an otherworldly harbinger."
+
+
+#Ritual Selctions----->
+selectritual "Grave Robbing"
+terr                 	-23 # Citadels 
+nearby3req               16 # Graveyards
+monplayerreq
+addstring "(&)Grave Digger"
+
+#Rituals----->
+newritual     "Gather Ghostly Cattle"
+ritpow                 	1 # Necromancer
+level                 	1
+cost              		0 15 # 15 gold
+alterloc				147 # Village
+nearby5req				-23 #Citadels
+terr                 	150  # shade-land
+aiwhere					150 
+free
+soundfx               	57
+descr "In order to raise a legion of the dead, the necromancer must make his home among them. The dead are his subjects.^Creates a Ghost Village. Must be at max 5 tiles near to any Citadel."
+
+newritual     "Summon Necro Knight"
+ritpow                 	1 # Necromancer
+level                 	2
+free
+cost              		5 70 #50 hands
+terr					65
+aiwhere					65
+summoning
+addstring "c*Necro Knight"
+soundfx               	57
+descr "By focusing necrotic powers through a Citadel of the Dead, any Necromancer can summon a Necro Knight from Hades. Necro Knights open up new recruitment options."
+
+newritual "Call Demon Lord, the seducer of mortals"
+ritpow					1 # Necromancer
+level					4
+free
+cost					5 1650
+planereq				0
+terr					65
+aiwhere					65
+summoning 
+addstring "c*Demon Lord"
+monplayerreq
+addstring "(&)Prince of Death"
+addstring "(&)Abyssal Sovereign of Destruction"
+descr "Abaddon, the Arch Devil of Destruction calls upon the Demon Lord, Belphagor, and convinces him to join Abbadon in his quest of ending the world in a tide of death."
+
+newritual "Call Abaddon, the Arch Devil of Destruction"
+ritpow					1 # Necromancer
+level					4
+free
+cost					5 1000
+planereq				0
+terr					65
+aiwhere					65
+summoning 
+addstring "c*Arch Devil"
+monplayerreq
+addstring "(&)Arch Devil"
+addstring "(&)Abyssal Sovereign of Destruction"
+descr "The Prince of Death calls upon Abaddon the Destroyer, who joins the repays a debt he owes to the prince by joining his ranks."
+
+newritual     "Rite of Necrotic Ascendancy"                                                 #  38
+ritpow                 1 # Necromancy
+level                  3
+cost              5  325 # 325 Hands
+minmonreq              1 #atleast 1 Lich should be at location of spell cast
+addstring     "(&)Lich"
+monplayerreq
+addstring "(&)Lich"
+terr                  -2 # Required terrain: temples.
+transformtarg          2 # Target is transformed into the monster specified in a random string.
+addstring     "Archlich of Undying Mastery"
+# fx963              405 # Prevents the following monster from learning this ritual: Prince of Death.
+gainrit                -1 # Caster learns the next ritual.
+updatehome               # Updates home (immortal resurrection location) for target unit to where he stands.
+descr "This ritual would involve the Lich delving deeper into the darkest corners of necromantic knowledge, forging an even more intimate connection with the realms of death and decay. The Lich would have to confront additional challenges and perils to attain this advanced state of necromantic power, solidifying their place as a terrifying and unstoppable force within the mystical world of Elysium. An Archlich would be born."
+apcost					6
+closewin
+rarestart
+
+newritual     "The Cataclysmic Ascension Rite"                                                 #  38
+ritpow                 1 # Necromancy
+level                  4
+cost              5  2000 # 2000 Hands
+minmonreq              1 #atleast 1 Archlich of Undying Mastery should be at location of spell cast
+addstring     "(&)Archlich of Undying Mastery"
+#addstring     "(-)Abyssal Sovereign of Destruction"
+monplayerreq
+addstring "(&)Archlich of Undying Mastery"
+#terr                  -94 # Required terrain: temples.
+promotion 1
+addstring "Archlich of Undying Mastery"
+addstring "Abyssal Sovereign of Destruction" 
+updatehome               # Updates home (immortal resurrection location) for target unit to where he stands.
+#apcost					12
+summoning
+addstring "c*Archlich Residual Necromancy Husk"
+closewin
+# fx963              405 # Prevents the following monster from learning this ritual: Prince of Death.
+descr "In the mystical annals of Elysium, The Cataclysmic Ascension Rite is a legend etched in darkness and arcane mysteries. This harrowing and awe-inspiring ritual marks the passage of an Archlich of Undying Mastery into the godly mantle of an Abyssal Sovereign of Destruction. The Archlich Of Undying Mastery completely leaves it's soul behind, ascending into godlyhood. The husk that's left behind, now without a soal forgets all it's arcane rituals though able to move and cast combat spells, it loses it's self awareness. Can only be cast a maximum of 3 times."
+free
+maxcast 3
+
+newritual     "Supreme Summoning"                                           #  28
+descr "This incantation will summon forth Supremely powerful undead servants. Not least among which is the Vampire Count, 2 Awakened Ziz, and Demonic Necro Knight."
+ritpow                 1 # Necromancy
+level                  3
+cost              5   320 # 320 Hands
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+sum0chance            2 # % chance to summon first string instead of a random string among the others.
+sum1chance            7 # % chance to summon first string instead of a random string among the others.
+sum2chance            15 # % chance to summon first string instead of a random string among the others.
+sum3chance            20 # % chance to summon first string instead of a random string among the others.
+addstring "c*Bane Lord & 10d2*Bane & 50d2*Bane-Bones & 50d2*Bane Fire Archer & 5*Bane Fire Catapult & c*Wraith Lord & 3*Ghost Lord & 10d2*Wraith & 15d2*Spectral Horseman & 30d2*Spectral Archer & c*Unfrozen King & 4*Unfrozen Mage & 40*Unfrozen Warrior & 40*Bane Fire Archer & 1d5*Dracolich & 1d5*Awakened Ziz & 1d3*Tartarian Spirit"
+addstring     "c*Vampire Count & *5d6*Longdead & 3d6*Wraith & *2d6Ghost Warrior & *2d6Spectral Archer & 2*Tartarian Spirit"
+addstring     "3*Awakened Ziz & 1*Tartarian Spirit"
+addstring     "c*Demonic Necro Knight & 2d6*Bane Lord & *3d6*Bane & 3d6*Wraith"
+addstring     "20*Bane & 3d6*Wraith & 3d6*Spectral Horseman"
+addstring     "2*Tartarian Spirit & 1*Awakened Ziz"
+monplayerreq
+addstring "(&)Demilich"
+addstring "(&)Archlich of Undying Mastery"
+addstring "(&)Abyssal Sovereign of Destruction"
+descr "Using the powers of a Demilich or an Archlich of Undying Mastery, any Master Necromancer can use the Supreme Summining to bring forth biengs of great dakr power. These include the Vampire Count, Demonic Necro Knight, Bane, and Bane Lords, and Awakened Ziz."
+
+newritual     "Mass Teleportation"
+ritpow                  1 # Necromancer
+level                   4
+free
+cost              		5 500 # 500 hands
+airare                  5 #Reduces the chance of the AI trying to use this ritual. Chance is the chance of casting the ritual and can be from 1-99. -1 is a special value meaning never cast it.
+apcost					8
+centercaster             # Center screen on caster.
+chooseterrloc			-1
+teleportloc				2
+minmonreq 				1
+addstring 				"(&)Abyssal Sovereign of Destruction"
+addstring               "(&)Archlich of Undying Mastery"
+monplayerreq	
+addstring "(&)Abyssal Sovereign of Destruction"
+soundfx               	57
+closewin
+descr "The Master Necromancer teleports his entire army to a desired location."
+
+newritual     "Home of Immortality"
+ritpow                  1 # Necromancer
+level                   2
+free
+cost              		5 10 # 10 hands
+apcost					2
+resreq					1048576
+terr					-94
+#montarg 1
+#addstring "Vampire"
+#addstring "Vampire Count"
+#addstring "Lich"
+#addstring "Demilich"
+#addstring "Archlich of Undying Mastery"
+#addstring "Abyssal Sovereign of Destruction"
+updatehome
+soundfx               	57
+closewin
+descr "This ritual allows allows the immortal creature to set their current location as their respawn point. Must be a Citadel or temple."
+
+#todo tune t4 terrain for balance
+#newritual     "Eldritch Eulogy of the Godshands"
+#ritpow                 	1 # Necromancer
+#level                 	4
+#cost              		0 400 # 400 gold
+#cost              		5 1500 # 500 Hands
+#cost                    17   50 # 50 Corpses
+#alterloc				900 # Sanctified Sepulcher
+#terr                 	-71  # flat-land
+#free
+#aiwhere					-71 
+#soundfx               	57
+#aialways               75 # Extra 75% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+#descr "The Eldritch Eulogy of the Godshands ritual is a profound and sacred act, and the resulting Sanctified Sepulcher is a place of reverence, offering both great power and solemn contemplation for those who venture within. It stands as a testament to the necromantic mastery of the spellcaster, capable of wielding the divine and the arcane with unparalleled authority. This ritual creates the terrain 'Sanctified Sepulcher' which gives 50 hands income and makes spell cost 25% cheaper."
+
+#Recruitment----->
+#2rec - Necromancer
+selectclass 2
+
+addunitrec "Armored Longdead" 100 20 0 0 40
+reclimiter "=Longdead"
+recterr      -23 
+
+addunitrec "Bane Fire Archer" 100 20 0 0 0
+recxcost 5 30
+reclimiter "=Longdead"
+recterr      -23 
+
+addunitrec "Bane-Bones" 100 20 0 0 20
+recxcost 5 16
+reclimiter "=Longdead"
+recterr      -23 
+
+addunitrec "Ghost Warrior" 100 20 50 0 5
+recxcost 5 35
+reclimiter "+Ghost King"
+reclimiter "=Dispossessed Spirit"
+recterr      -1104 #Dark and Infernal Citadels  
+
+addunitrec "Spectral Archer" 100 20 60 0 10
+recxcost 5 40
+reclimiter "+Ghost King"
+reclimiter "=Dispossessed Spirit"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addunitrec "Ditanu" 100 3 75 0 0
+recxcost 5 75
+reclimiter "+Lich"
+reclimiter "+Demilich"
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addunitrec "Melqart" 100 3 150 0 0
+recxcost 5 150
+reclimiter "+Demilich"
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addunitrec "Fiend of Darkness" 100 5 100 0 0
+recxcost 5 50
+reclimiter "+Prince of Death"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addunitrec "Demon Knight" 100 5 200 0 0
+recxcost 5 150
+reclimiter "+Prince of Death"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addunitrec "Tainted Ziz" 100 1 65 0 0
+recxcost 5 75
+reclimiter "+Lich"
+reclimiter "+Demilich"
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addunitrec "Tainted Ziz" 100 2 130 0 0
+recxcost 5 150
+reclimiter "+Lich"
+reclimiter "+Demilich"
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+recterr      -1104 #Dark and Infernal Citadels 
+
+#--Commanders--
+
+addcomrec   "Grave Digger" 15 35 35 0                    # once per offer; extra.
+libraryrec                                              #+2% to chance per library point owned, to a max of +20% for 10+ library points.
+
+addcomrec "Necromancer's Apprentice" 100 150 5 0
+reclimiter "+Lich"
+reclimiter "+Demilich"
+reclimiter "+Archlich of Undying Mastery"
+recterr      -1104 #Dark and Infernal Citadels
+planereq 0 #Elysium
+
+addcomrec "Ghost Mage" 100 150 5 0
+reclimiter "+Ghost King"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+recxcost 5 20
+
+addcomrec "Wraith Lord" 10 75 25 15
+recxcost 5 20
+reclimiter "+Wraith King"
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Wraith King" 5 125 50 25
+recxcost 5 50
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Lich" 3 130 60 25
+recxcost 5 40
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Bane Lord" 6 75 25 30
+recxcost 5 20
+reclimiter "+Prince of Death"
+reclimiter "+Archlich of Undying Mastery"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Ghost Mage" 6 50 20 0
+recxcost 5 10
+libraryrec
+reclimiter "+Ghost Lord"
+reclimiter "+Ghost King"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Ghost Lord" 3 75 25 0
+recxcost 5 25
+libraryrec
+reclimiter "+Ghost King"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Ghost King" 1 120 25 0
+recxcost 5 50
+libraryrec
+reclimiter "+Ghost King"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels 
+
+addcomrec "Tartarian Spirit" 30 120 30 0
+recxcost 5 100
+reclimiter "+Lich"
+reclimiter "+Demilich"
+reclimiter "+Archlich of Undying Mastery"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels
+
+addcomrec "Tainted Carrion" 100 60 0 0
+recxcost 5 60
+reclimiter "+Lich"
+reclimiter "+Demilich"
+reclimiter "+Archlich of Undying Mastery"
+reclimiter "+Abyssal Sovereign of Destruction"
+recterr      -1104 #Dark and Infernal Citadels
+#------------
+
+#Necromancer End-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+
+#Witch Start-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+#Class Description ---->
+selectclass 4
+classdescr "In the ages long before the arrival of man, Elysium was graced by beings of tremendous power who roamed the land, the unchallenged lords of the yet-unnamed realm. Yet, the echoes of an encroaching Ice Age heralded a time of great change. As the frigid embrace of winter tightened its grip on Elysium, these beings, the Sleeping Ones, chose to withdraw into the earth to slumber, seeking respite from the icy tempest that threatened to engulf their world. ^^ In their somnolence, the Sleeping Ones awaited an unknown destiny. But as time passed and the Ice Age rescinded, new inhabitants ventured into their realm, disturbing the tranquility of these ancient beings, sometimes inviting their wrath. It was amid this tumultuous backdrop that the Witches emerged, drawing upon mystic arts to serve the Frost Queen, the embodiment of winter's majesty. ^^ A supremely powerful Witch can use her enigmatic powers to pierce through the plane of Elysium and contact the Frost Queen. Forming a covenant with the powerful Diety of Frozen Majesty, and gaining new powers and followers as a result. ^^ The beings at the Witch's disposal are physically strong and easy to obtain, but most lack ranged attacks.  Archers are a crucial supplement.  The Witch's ability to collect fungi from forests, jungles, and swamps provides her with excellent scouting capabilities.  The more fungi she uses for summoning monsters, the greater the chance of controlling the summoned creature. It is prudent to use plenty of fungi when summoning an Old One, for they are very dangerous if angered."
+classabdescr "Witches collect fungi from forests, Jungles and marshes.^Witches can use fungi to perform magic rituals.^Witch's Apprentices can use the surrounding swamps and marshes to recruit Androphags which can then be upgraded at a Citadel.^Poison Archers and Lizard Cavalry can also be recruited by also spending fungi.^Powerful Witches can form covenants with the Frost Queen, the Icy Diety beyond the realms of Elysium, gaining power, allies, snow movement and water breathing."
+
+#Terrain ---->
+
+selectterr 901 #Witchwood Village
+name "Witchwood Village"
+spr "WitchwoodVillage.tga"
+ownable
+fungus            1 # Fungus:  3
+gold              3 # Gold:  3
+sacr              1
+hands             1
+trade             1 # Trade:  1
+apcost            1 # Action Point cost for moving through the terrain: 1
+desertok            # The terrain can appear in the southern portion of the map.
+snowok
+batmap           45 # Battle map: tentvillage.
+settlement          # Defines the terrain as a human settlement.
+
+selectterr 902 #Ice Shroud Stronghold
+name "Ice Shroud Stronghold"
+spr "IceshroudStronghold.tga"
+ownable
+fungus            5 # Fungus:  3
+gold              5 # Gold:  3
+sacr              2
+hands             3
+enchantedgate       # The gate of the fort is enchanted to be more durable.
+apcost            1 # Action Point cost for moving through the terrain: 1
+desertok            # The terrain can appear in the southern portion of the map.
+snowok
+trade             2 # Trade:  2
+spreadcold
+library1            # Library level +1.
+library2            # Library level +2.
+batmap            3 # Battle map: highwall.
+irongate            # The gate of the fort is iron       
+citadel             # The terrain functions as a citadel when owned.
+farsight            # The terrain gives increased vision range when there are units present there.
+
+#Monsters ---->
+selectmonster "Swamp Ghost"
+rank 2
+
+selectmonster "Witch's Apprentice"
+swamp
+poisonres                    50 # Poison immunity.
+
+selectmonster "Witch"
+charmres                         # Charm immunity.
+acutesenses                      # Can see units with Stealth or Forest Stealth.
+swamp
+diseaseres
+poisonres 100
+
+selectmonster "Hag"
+hp                             10 # Hit Points.
+armor                          1 # Armor.
+charmres                         # Charm immunity.
+acutesenses                      # Can see units with Stealth or Forest Stealth.
+swamp
+diseaseres
+poisonres 100
+spellweapon 46 2
+
+selectmonster "Androphag Archer"
+armor                          0 # Armor.
+hp                             6 # Hit Points.
+str                            4 # Strength.
+mor                            4 # Morale.
+mr                             4 # Magic Resistance.
+rank                           0 # Mid rank.
+rangedweapon               0  34 # Poison Bow: d3 Pierce damage.
+meleeweapon                0   1 # Dagger: d3 Pierce damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+poisonres                    100 # Poison immunity.
+allitemslots                     # Has the full set of item slots.
+ 
+selectmonster "Androphag Spearman"
+poisonres                    100 # Poison immunity.
+armor                          1 # Armor.
+hp                             6 # Hit Points.
+str                            4 # Strength.
+mor                            5 # Morale.
+mr                             4 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweapon                0   6 # Hammer: d4 Blunt damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+swamp
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+
+selectmonster "Androphag Cavalry"
+clearspec
+armor                          1 # Armor.
+hp                            11 # Hit Points.
+str                            4 # Strength.
+mor                            6 # Morale.
+mr                             4 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweaponspec           10  13 # Lance Charge: d10 Pierce damage.
+meleeweapon                0   4 # Spear: d4 Pierce damage.
+meleeweaponbonus           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+nobootslots                      # Has no boot slots.
+poisonres 100
+swamp
+
+selectmonster "Androphag Lord"
+clearspec
+armor                          2 # Armor.
+hp                            30 # Hit Points.
+str                            5 # Strength.
+mor                            8 # Morale.
+mr                             6 # Magic Resistance.
+rank                           0 # Mid rank.
+power                      4   2 #Witch power lvl 2
+spellweapon               40   2 # Witchery at level 2.
+meleeweaponspec           10  13 # Lance Charge: d10 Pierce damage.
+meleeweapon                1   4 # Spear: d5 Pierce damage.
+meleeweaponbonus           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+poisonres                    100 # Poison immunity.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+leadership                     1
+nobootslots                      # Has no boot slots.
+acutesenses
+nametype                      36 # Sauromatian.     
+
+selectmonster "Frost Giant"
+clearspec
+descr "In the farthest reaches of the Elemental Plane of Water lies an icy realm of unforgiving cold.  Here live the Frost Giants, primordial beings of tremendous strength.  As warriors and guardians of their frozen realm, they wield the cold as a weapon.  They live in castles of iron and ice, and only leave their abodes to wage war upon the other elemental realms.  Like all inhabitants of the realm of Water, the Frost Giants have difficulties entering the Plane of Fire, but should they meet denizens of that realm in Elysium, they are likely to attack on sight."
+# sprite number            11074
+armor                          2 # Armor.
+hp                           128 # Hit Points.
+str                           10 # Strength.
+mor                            6 # Morale.
+mr                             8 # Magic Resistance.
+rank                           1 # Front rank.
+siegeweapon               40 361 # Massive Boulder: d40 Blunt damage.
+meleeweapon               25 258 # Battle Axe: d33 Slash damage.
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+snow                             # -1 AP to enter snow-covered squares.
+coldres                      100 # Cold immunity.
+largeshield                      # Reduces damage from most weapons by 0-2; 0-4 against ranged weapons.
+weaponslots                      # Only has 1 weapon and 2 misc slots.
+power                      41  1 # Frost Giant, level 1.
+fireres                      -50 # 50 Fire Vulnerability.
+poisonres                    100 # Poison immunity.
+acidres                     100 # Poison immunity.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldaura                       4 # Frost Shield (4): Any enemy attacking this unit in melee will take some armor-negating cold damage.
+swamp
+charmres
+fear
+fastheal
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e. monster #496: Frost Titan.
+changetemp                   -25 # Makes square 25 degrees colder.
+# fx155                        1 # [hates]: Hates units with fx156, value 1 (fire beings). Will try to kill some of the units it hates each turn spent in the same location, even if they are allies.
+iceprot                        1 # +1 armor in cold climate.
+growtime 15
+
+selectmonster "Frost Titan"
+clearspec
+descr "In the farthest reaches of the Elemental Plane of Water lies an icy realm of unforgiving cold.  Here live the Frost Giants, primordial beings of tremendous strength.  They are led by kings endowed with magical powers of water and ice. No one knows how old these Frost Titans can become. Legend has it that they have been there since the beginning."
+# sprite number            11076
+armor                          3 # Armor.
+hp                           150 # Hit Points.
+str                           11 # Strength.
+mor                            9 # Morale.
+mr                             8 # Magic Resistance.
+rank                           0 # Mid rank.
+siegeweapon               40 361 # Massive Boulder: d40 Blunt damage.
+spellweapon               27   2 # Frost Magic at level 2.
+meleeweapon               28 475 # Magic Sword: d38 Slash damage.
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+snow                             # -1 AP to enter snow-covered squares.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres                      100 # Cold immunity.
+magicshield                      # Reduces damage from most weapons by 0-3; 0-6 against ranged weapons.
+weaponslots                      # Only has 1 weapon and 2 misc slots.
+power                      41  2 # Frost Giant, level 2.
+fireres                      -25 # 25 Fire Vulnerability
+swamp
+fear
+poisonres                    100 # Poison immunity.
+acidres                     100 # Poison immunity.
+varregen                      2 #2%hp regen
+unaging                          # Immune to aging effects like decay.
+coldaura                       6 # Frost Shield (6): Any enemy attacking this unit in melee will take some armor-negating cold damage.
+changetemp                   -35 # Makes square 35 degrees colder.
+# fx155                        1 # [hates]: Hates units with fx156, value 1 (fire beings). Will try to kill some of the units it hates each turn spent in the same location, even if they are allies.
+drawsize                      15 # Draw the unit 15% larger when shown on its unit token.
+iceprot                        1 # +1 armor in cold climate.
+
+selectmonster "Winter Wolf"
+swamp
+poisonres                    100 # Poison immunity.
+acidres                     75 # acid immunity.
+
+selectmonster "Hydra Hatchling" 0 #568 Hydra Hatchling
+growtime 15
+growoffs -1
+
+selectmonster "Hydra Hatchling" 1 #569 Hydra Hatchling
+growtime 15
+growoffs -2
+
+selectmonster "Hydra Hatchling" 2 #570 Hydra Hatchling
+growtime 15
+growoffs -3
+
+#New Monsters ---->
+
+newmonster "Androphag"
+copyspr "Slinger"
+armor                          0 # Armor.
+hp                             4 # Hit Points.
+str                            4 # Strength.
+mor                            4 # Morale.
+mr                             3 # Magic Resistance.
+rank                           1 # Front rank.
+poisonres                    100 # Poison immunity.
+meleeweapon                0   6 # Hammer: d4 Pierce damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+descr "The Androphagi, as untrained individuals, symbolize the raw and unbridled essence of their ferral culture. They are living remnants of a more savage past and a testament to the diversity of beings in the mystical realm of Elysium. They also eat Humans."
+allitemslots                     # Has the full set of item slots.
+swamp
+
+newmonster "Androphag"
+copyspr "Slinger"
+armor                          0 # Armor.
+hp                             4 # Hit Points.
+str                            4 # Strength.
+mor                            3 # Morale.
+poisonres                    100 # Poison immunity.
+mr                             4 # Magic Resistance.
+rank                           0 # Mid rank.
+rangedweapon               0  27 # Sling: d2 Blunt damage.
+meleeweapon                0   0 # Fist: d1 Blunt damage.
+money2                           # Likes gold income squares (if an independent or stupid commander, will not move more than 1 square away from its liked terrains).
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+descr "The Androphagi, as untrained individuals, symbolize the raw and unbridled essence of their ferral culture. They are living remnants of a more savage past and a testament to the diversity of beings in the mystical realm of Elysium. They also eat Humans."
+allitemslots                     # Has the full set of item slots.
+swamp
+
+newmonster    "Androphag Squire"
+copyspr "Androphag Spearman"
+armor                          1 # Armor.
+hp                            13 # Hit Points.
+str                            4 # Strength.
+mor                            5 # Morale.
+mr                             4 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweapon                0   6 # Hammer: d4 Blunt damage.
+meleeweapon                1   4 # Spear: d5 Pierce damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+nametype                      36 # Sauromatian.
+descr "The Androphag Squire is a promising young warrior among their tribe, dedicated to their people's welfare and the mastery of the martial arts. Under the mentorship of an Androphag Knight, they are on a path to become a formidable protector of their kind."
+growtime 10
+
+newmonster    "Androphag Knight"
+copyspr "Androphag Cavalry"
+armor                          2 # Armor.
+hp                            20 # Hit Points.
+str                            6 # Strength.
+mor                            7 # Morale.
+mr                             4 # Magic Resistance.
+rank                           0 # Mid rank.
+power                      4   1 #Witch power lvl 2
+spellweapon               40   1 # Witchery at level 1.
+spellweapon               40   1 # Witchery at level 1.
+meleeweaponspec           10  13 # Lance Charge: d10 Pierce damage.
+meleeweapon                1   4 # Spear: d5 Pierce damage.
+meleeweaponbonus           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+poisonres                    100 # Poison immunity.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+nobootslots                      # Has no boot slots.
+descr "In the mystical realm of Elysium, the Androphag Knights embody the fusion of untamed primal strength with a growing proficiency in witchcraft. Evolving from the raw beginnings of the Androphag Squire, they have become formidable warriors who wield both martial prowess and the mystical arts. As Androphag Knights, they have harnessed their inner savagery and combined it with an evolving understanding of witchcraft. This marks a transformation marked by unwavering commitment and a sense of duty to protect their kind."
+nametype                      36 # Sauromatian.
+
+#****after Frost Sorceress is Summoned****
+
+newmonster    "Androphag Frost Archer"
+spr1 "AndrophagFrostArcherMale.tga"
+spr2 "AndrophagFrostArcherMale2.tga"
+armor                          1 # Armor.
+hp                             13 # Hit Points.
+str                            5 # Strength.
+mor                            5 # Morale.
+mr                             5 # Magic Resistance.
+rank                           0 # Mid rank.
+rangedweapon               0  "Frost Bow" # Poison Bow: d3 Pierce damage.
+meleeweapon                0   1 # Dagger: d3 Pierce damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+diseaseres
+poisonres 100
+acidres 100
+iceprot                        1 # +1 armor in cold climate.
+charmres
+nametype                      36 # Sauromatian.
+
+newmonster    "Androphag Frost Archer"
+spr1 "AndrophagFrostArcherFemale.tga"
+spr2 "AndrophagFrostArcherFemale2.tga"
+armor                          1 # Armor.
+hp                             13 # Hit Points.
+str                            5 # Strength.
+mor                            5 # Morale.
+mr                             5 # Magic Resistance.
+rank                           0 # Mid rank.
+rangedweapon               0  "Frost Bow" # Poison Bow: d3 Pierce damage.
+meleeweapon                0   1 # Dagger: d3 Pierce damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+diseaseres
+poisonres 100
+acidres 100
+iceprot                        1 # +1 armor in cold climate.
+charmres
+nametype                      36 # Sauromatian.
+
+newmonster    "Androphag Frost Cavalry"
+spr1 "AndrophagFrostKnight.tga"
+spr2 "AndrophagFrostKnight2.tga"
+armor                          3 # Armor.
+hp                            25 # Hit Points.
+str                            6 # Strength.
+mor                            7 # Morale.
+mr                             5 # Magic Resistance.
+rank                           0 # Mid rank.
+spellweaponbonus                40   1 # Witchery at level 1.
+spellweaponbonus                27   1 # Frost Magic at level 1.
+meleeweaponspec           5  768 # Ice Lance Charge: d5 Pierce damage.
+meleeweapon           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+nobootslots                      # Has no boot slots.
+diseaseres
+poisonres 100
+acidres 100
+charmres
+iceprot                        1 # +1 armor in cold climate.
+nobootslots                      # Has no boot slots.
+nametype                      36 # Sauromatian.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+descr "In the heart of the icy wilderness in Elysium, the Androphag Frost Knight stands as a stalwart guardian, serving the Androphag Frost Lord and Frost King, with unwavering loyalty. Evolving from their primal origins, the Frost Knight combines their martial prowess with the elemental magic of frost and the mystic arts of witchcraft, dedicating themselves to the protection and advancement of their tribe."
+growtime 40
+
+newmonster    "Androphag Frost Cavalry Elite"
+spr1 "AndrophagFrostKnight.tga"
+spr2 "AndrophagFrostKnight2.tga"
+armor                          3 # Armor.
+hp                            35 # Hit Points.
+str                            7 # Strength.
+mor                            8 # Morale.
+mr                             5 # Magic Resistance.
+rank                           0 # Mid rank.
+spellweapon               40   2 # Witchery at level 2.
+spellweapon               27   2 # Frost Magic at level 2.
+meleeweaponspec           5  768 # Ice Lance Charge: d5 Pierce damage.
+meleeweapon           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+nobootslots                      # Has no boot slots.
+diseaseres
+poisonres 100
+acidres 100
+iceprot                        1 # +1 armor in cold climate.
+charmres
+more1spells                 1    # The monster starts with more or fewer level 1 spells when it spawns.
+nobootslots                      # Has no boot slots.
+nametype                      36 # Sauromatian.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+descr "In the heart of the icy wilderness in Elysium, the Androphag Frost Knight stands as a stalwart guardian, serving the Androphag Frost Lord and Frost King, with unwavering loyalty. Evolving from their primal origins, the Frost Knight combines their martial prowess with the elemental magic of frost and the mystic arts of witchcraft, dedicating themselves to the protection and advancement of their tribe. They are extreamely dangerous and powerful. This one is an elite among his bretheren."
+
+newmonster    "Androphag Frost Pikemen"
+spr1 "AndrophagFrostPikemen.tga"
+spr2 "AndrophagFrostPikemen2.tga"
+armor                          2 # Armor.
+hp                            18 # Hit Points.
+str                            5 # Strength.
+mor                            6 # Morale.
+mr                             5 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweapon                0  "Frost Pike" # Pike: d7 Pierce damage 4 magic cold damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+diseaseres
+poisonres 100
+iceprot                        1 # +1 armor in cold climate.
+acidres 100
+charmres
+nametype                      36 # Sauromatian.
+descr "The Androphag Frost Pikemen stand as stalwart defenders of their tribe, armed with icy lances and unwavering determination. These warriors have honed their skills to mastery, protecting their people in the unforgiving frozen wilderness of Elysium."
+
+newmonster    "Androphag Frost Squire"
+copyspr "Androphag Frost Pikemen"
+armor                          2 # Armor.
+hp                            20 # Hit Points.
+str                            5 # Strength.
+mor                            5 # Morale.
+mr                             5 # Magic Resistance.
+rank                           1 # Front rank.
+meleeweapon                0  "Frost Pike" # Pike: d7 Pierce damage 4 magic cold damage.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+diseaseres
+poisonres 100
+acidres 100
+iceprot                        1 # +1 armor in cold climate.
+charmres
+nametype                      36 # Sauromatian.
+descr "The Androphag Frost Squire is a rising star among their tribe, recognized for their valor in battle and their unwavering dedication to their people. Having distinguished themselves on the icy front lines, they now stand on the cusp of greatness, undertaking an apprenticeship under the tutelage of an Androphag Frost Knight."
+growtime 10
+
+newmonster    "Androphag Frost Knight"
+spr1 "AndrophagFrostKnight.tga"
+spr2 "AndrophagFrostKnight2.tga"
+armor                          3 # Armor.
+hp                            25 # Hit Points.
+str                            6 # Strength.
+mor                            7 # Morale.
+mr                             5 # Magic Resistance.
+rank                           0 # Mid rank.
+power                      4   1 #Witch power lvl 1
+spellweapon               40   1 # Witchery at level 1.
+spellweapon               27   1 # Frost Magic at level 1.
+meleeweaponspec           7  768 # Lance Charge: d7 Pierce damage.
+meleeweapon                1   4 # Spear: d5 Pierce damage.
+meleeweaponbonus           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+diseaseres
+poisonres 100
+acidres 100
+charmres
+iceprot                        1 # +1 armor in cold climate.
+nobootslots                      # Has no boot slots.
+nametype                      36 # Sauromatian.
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+descr "In the heart of the icy wilderness in Elysium, the Androphag Frost Knight stands as a stalwart guardian, serving the Androphag Frost Lord and Frost King, with unwavering loyalty. Evolving from their primal origins, the Frost Knight combines their martial prowess with the elemental magic of frost and the mystic arts of witchcraft, dedicating themselves to the protection and advancement of their tribe."
+mastery                       1 # A mastery effect will change this monster to the type defined 1 after this one; 
+
+newmonster    "Androphag Frost Lord"
+spr1 "AndrophagFrostLord.tga"
+spr2 "AndrophagFrostLord2.tga"
+armor                          4 # Armor.
+hp                            30 # Hit Points.
+str                            7 # Strength.
+mor                            8 # Morale.
+mr                             6 # Magic Resistance.
+rank                           0 # Mid rank.
+power                      4   2 #Witch power lvl 2
+spellweapon               40   2 # Witchery at level 2.
+spellweapon               27   2 # Frost Magic at level 2.
+meleeweaponspec           10  768 # Lance Charge: d10 Pierce damage.
+meleeweapon                1   4 # Spear: d5 Pierce damage.
+meleeweaponbonus           6  11 # Bite: d6 Slash damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+nobootslots                      # Has no boot slots.
+nametype                      36 # Sauromatian.
+diseaseres
+poisonres 100
+acidres 100
+leadership                     1
+acutesenses
+iceprot                        1 # +1 armor in cold climate.
+charmres
+coldres 100
+snow                             # -1 AP to enter snow-covered squares.
+descr "In the heart of Elysium's frozen wilderness, the Androphag Frost Lord stands as a formidable figure, a loyal servant to the Androphag Frost King and a guardian of their people. Evolving from their primal origins, the Frost Lord blends mastery over level 2 frost magic with the mystic arts of witchcraft, a testament to their unwavering commitment."
+mastery                       1 # A mastery effect will change this monster to the type defined 1 after this one; 
+
+newmonster    "Androphag Frost King"
+spr1 "AndrophagFrostKing.tga"
+spr2 "AndrophagFrostKing2.tga"
+armor                          5 # Armor.
+hp                            40 # Hit Points.
+str                            8 # Strength.
+mor                            10 # Morale.
+mr                             7 # Magic Resistance.
+rank                           0 # Mid rank.
+power                      4   3 #Witch power lvl 3
+spellweapon               40   3 # Witchery at level 1.
+spellweapon               27   3 # Frost Magic at level 3.
+meleeweaponspec           15  768 # Lance Charge: d15 Pierce damage.
+meleeweaponbonus           10  11 # Strong Poisonous Bite: d6 Pierce damage.
+fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+allitemslots                     # Has the full set of item slots.
+nobootslots                      # Has no boot slots.
+nametype                      36 # Sauromatian.
+acutesenses
+diseaseres
+poisonres 100
+acidres 100
+leadership                     2
+snow                             # -1 AP to enter snow-covered squares.
+charmres
+coldres 100
+iceprot                        1 # +1 armor in cold climate.
+descr "In the untamed heart of Elysium, the Androphag Frost King reigns as the undisputed ruler and supreme authority among their kind, a figure of both might and mystic power. However, their ascension to the throne is no ordinary tale; it's a saga of a covenant forged with the enigmatic Ice Queen herself, granting the King his level 3 mastery frost magic. The King serves the Frost Queen along with his fellow vassel the Frost Sorceress. Together they work to resurrect the Frost Queen into the plane of Elysium."
+randommisc 100
+randomrare                   100 # 100% chance to spawn with a random rare magic item.
+
+#newmonster    "Frost Queen's Warrior"
+#spr1 "AndrophagFrostLord.tga"
+#spr2 "AndrophagFrostLord2.tga"
+#armor                          4 # Armor.
+#hp                            30 # Hit Points.
+#str                            7 # Strength.
+#mor                            8 # Morale.
+#mr                             6 # Magic Resistance.
+#rank                           0 # Mid rank.
+#power                      4   2 #Witch power lvl 2
+#spellweapon               40   2 # Witchery at level 2.
+#spellweapon               27   2 # Frost Magic at level 2.
+#meleeweaponspec           10  768 # Lance Charge: d10 Pierce damage.
+#meleeweapon                1   4 # Spear: d5 Pierce damage.
+#meleeweaponbonus           6  11 # Bite: d6 Slash damage.
+#fast                             # The monster has 4 AP and also moves twice on the battlefield per turn in combat.
+#swamp                            # Swamp Move: only requires 1 AP to move to a swamp square.
+#water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+#human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid #corpse on death.
+#shield                           # Reduces damage from most weapons by 0-1; 0-2 against ranged weapons.
+#allitemslots                     # Has the full set of item slots.
+#nobootslots                      # Has no boot slots.
+#nametype                      36 # Sauromatian.
+#diseaseres
+#poisonres 100
+#acidres 100
+#acutesenses
+#iceprot                        1 # +1 armor in cold climate.
+#charmres
+#coldres 100
+#snow                             # -1 AP to enter snow-covered squares.
+#descr "In the heart of Elysium's frozen wilderness, the Androphag Frost Lord stands as a formidable figure, a loyal #servant to the Androphag Frost King and a guardian of their people. Evolving from their primal origins, the Frost #Lord blends mastery over level 2 frost magic with the mystic arts of witchcraft, a testament to their unwavering #commitment."
+#mastery                       1 # A mastery effect will change this monster to the type defined 1 after this one; 
+
+newmonster "Frost Queen's Frost Drake"
+copyspr "Frost Drake"
+copystats "Frost Drake"
+armor 2
+swamp
+diseaseres
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+charmres
+poisonres 100
+snowstealth                      # When in snow, can only be seen by units with Acute Senses or Spirit Sight.
+fastheal
+fast
+iceprot                        1 # +1 armor in cold climate.
+acidres 100
+descr "The Frost Drake is a large, lizard-like being with a numbingly cold body and an icy breath. In truth, it's actually a baby dragon, though it takes awhile for it to reach maturity.  Originating from the Elemental plane of frost, it has since adapted to life in Elysium, like it's ancestors before it. This Frost Drake serves the Frost Queen, the Supreme Diety of Winter and Frost."
+growtime 35                     # after 35 turns will grow into frost queen's dragon
+growoffs 7
+
+newmonster "Frost Queen's Yeti"
+copyspr "Yeti"
+armor                          2 # Armor.
+hp                            45 # Hit Points.
+str                            8 # Strength.
+mor                            6 # Morale.
+mr                             5 # Magic Resistance.
+rank                           1 # Front rank.
+rangedweapon               4  97 # Throw Rock: d5 Blunt damage.
+meleeweapon                8   0 # Fist: d9 Blunt damage.
+mountain                         # Mountain Move: AP cost to enter a mountain square is reduced by 1.
+snow                             # -1 AP to enter snow-covered squares.
+coldres                      100 # Cold immunity.
+allitemslots                     # Has the full set of item slots.
+fireres                      -25 # 25 Fire Vulnerability.
+coldaura                       2 # Frost Shield (2): Any enemy attacking this unit in melee will take some armor-negating cold damage.
+charmres
+poisonres 100
+acidres 100
+swamp
+iceprot                        1 # +1 armor in cold climate.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+diseaseres
+charmres
+poisonres 100
+descr "Yetis are reclusive beings that haunt remote and snow-covered mountaintops.  They are attuned to cold and are surrounded by an icy wind that will freeze those who strike the Yeti. This Yeti serves the Frost Queen and is part of her Army of Frost."
+acidres 100
+
+newmonster "Frost Queen's Mist Warrior"
+copyspr "Mist Warrior"
+armor                          0 # Armor.
+hp                             8 # Hit Points.
+str                            5 # Strength.
+mor                            6 # Morale.
+mr                             6 # Magic Resistance.
+rank                           0 # Mid rank.
+rangedweapon               1 758 # Mist Bow: d4 Pierce damage.
+meleeweapon                1 757 # Mist Dagger: d4 Pierce damage.
+float                            # -1 AP to enter terrain (min 1), can float in sky or over water without fatiguing, and immune to ground attacks.
+coldres                      100 # Cold immunity.
+poisonres                    100 # Poison immunity.
+shockres                     100 # Shock immunity.
+ethereal                         # 75% chance to be unaffected by mundane weapons; can pass through walls.
+nametype                       9 # Pangaea male.
+swamp
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+charmres
+iceprot                        1 # +1 armor in cold climate.
+diseaseres
+descr "The para-elemental warriors are made from two elements each and are usually more powerful than their more pure brethren.  They are a rare sight to behold though, as the para-elementals are not really at home in any of the elemental planes."
+acidres 25
+
+newmonster "Frost Witch's Apprentice"
+copyspr "Witch's Apprentice"
+copystats "Witch's Apprentice"
+spellweapon               27   1 # Frost Magic at level 1.
+coldres 100
+acidres 100
+charmres
+diseaseres
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+mastery                       1 # A mastery effect will change this monster to the type defined 1 after this one;
+descr "The Frost Witch's Apprentice is a fledgling mystic, drawn to the enigmatic realm of frost magic and witchcraft. They are often the youthful initiates of the chilling arts, seeking to unravel the secrets of their frosty craft under the tutelage of the formidable Frost Witch." 
+
+newmonster "Frost Witch"
+copyspr "Ice Witch"
+hp                             8 # Hit Points.
+armor                          1 # Armor.
+str                            4 # Strength.
+mor                            8 # Morale.
+mr                             10 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweapon               27   2 # Frost Magic at level 2.
+spellweapon               40   2 # Witchery at level 2.
+spellweapon               46   2 # Maladies at level 2
+meleeweapon                0   5 # Staff: d3 Blunt damage.
+power                       4  2 # Witchery, level 2.
+snow                             # -1 AP to enter snow-covered squares.
+charmres                         # Charm immunity.
+acutesenses                      # Can see units with Stealth or Forest Stealth.
+swamp
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+diseaseres
+poisonres 100
+leadership                     1
+iceprot                        1 # +1 armor in cold climate.
+acidres 100
+coldres                      100 # Cold immunity.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+female                           # Female.
+randomrare                    10 # 10% chance to spawn with a random rare magic item.
+randomitem                    25 # 25% chance to spawn with a random magic item of any type.
+mastery                        1 # A mastery effect will change this monster to the type defined 1 after this one; i.e. monster #64: Frost Hag.
+descr "In the winter parents often scare their children by saying that the Ice Witch will come for them if they don't obey their parents.  Nowadays the Ice Witches don't care if the children are obedient or not.  They steal those they can get their hands on and take them back to their Tower of Ice. Some children are raised as apprentices and some are eaten or maybe used for sinister rituals to prolong the winter."
+mastery                       1 # A mastery effect will change this monster to the type defined 1 after this one; 
+
+newmonster "Frost Sorceress"
+copyspr "Frost Hag"
+hp                             13 # Hit Points.
+armor                          2 # Armor.
+str                            5 # Strength.
+mor                            9 # Morale.
+mr                             10 # Magic Resistance.
+rank                          -1 # Back rank.
+spellweapon               27   3 # Frost Magic at level 3.
+spellweapon               40   3 # Witchery at level 3.
+spellweapon               46   3 # Maladies
+meleeweapon                0   5 # Staff: d3 Blunt damage.
+power                       4  3 # Witchery, level 3.
+snow                             # -1 AP to enter snow-covered squares.
+snowstealth                      # When in snow, can only be seen by units with Acute Senses or Spirit Sight.
+charmres                         # Charm immunity.
+acutesenses                      # Can see units with Stealth or Forest Stealth.
+diseaseres
+leadership                     1
+swamp
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+coldres                      100 # Cold immunity.
+poisonres 100
+acidres 100
+iceprot                        2 # +2 armor in cold climate.
+human                            # Vulnerable to weapons and spells that only affect humans; leaves a humanoid corpse on death.
+allitemslots                     # Has the full set of item slots.
+female                           # Female.
+randomrare                    100 # 100% chance to spawn with a random rare magic item.
+randomrare                    100 # 100% chance to spawn with a random rare magic item.
+descr "In the mystical world of Elysium, the Frost Sorceress is a fearsome and enigmatic figure deeply intertwined with the chilling embrace of winter. Much like her predecessor, the Ice Witch, she carries a reputation that sends shivers down the spines of both children and adults. As the Frost Sorceress, she is a formidable force of elemental magic, presiding over the winter landscapes with an air of majesty and enigma. Parents in Elysium continue to invoke her name as a cautionary tale to keep wayward children in check, for her legend remains a potent source of fear. Formed from the Covenant with the Frost Queen and the promise to resurrect the diety, the Hag transformed into a Frost Sorceress and gained massive power."
+
+newmonster "Frost Queen's Chosen"
+spr1 "FrostQueenChosen.tga"
+spr2 "FrostQueenChosen2.tga"
+hp                             77 # Hit Points.
+armor                          6 # Armor.
+str                            7 # Strength.
+mor                            15 # Morale.
+mr                             10 # Magic Resistance.
+varregen                        5 # Heals ~5% HP every combat round in battle. May rise from the dead if unit time, but not as 
+rank                          -1 # Back rank.
+spellweaponbonus               27   4 # Frost Magic at level 4.
+spellweaponbonus               40   3 # Witchery at level 3.
+spellweaponbonus               46   3 # Maladies
+meleeweapon                0   5 # Staff: d3 Blunt damage.
+prebatweapon              5 "Summon Frost Drake" # Summon Frost Drake: d3 units summoned.
+prebatweapon              5 "Summon Yeti" # Summon Yeti: 3 units summoned.
+spellrange                  1    # Value = +range for battle spells
+more1spells 1
+power                       4  4 # Witchery, level 4.
+flying
+fast
+leadership                     2
+spawnmon                       5 # Each month, spawns 1 of the monster type defined 2 after this one; i.e. monster: Great Raven of Frost.
+spawnoffs                      2 # Specifies the offset to the monster type to spawn with the above command.
+snow                             # -1 AP to enter snow-covered squares.
+snowstealth                      # When in snow, can only be seen by units with Acute Senses or Spirit Sight.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+charmres                         # Charm immunity.
+spiritsight
+diseaseres
+iceprot                        3 # +3 armor in cold climate.
+coldres                      100 # Cold immunity.
+fireres                      25 # fire immunity 25%.
+unaging                          # Immune to aging effects like decay.
+acidres 100
+poisonres 100
+immortal
+immortalap                     8 # When the monster dies, it costs 8 AP to respawn.
+unaging
+farsight                       1 # Farsight: can see 1 square further than usual on the world map.
+bluntres                         # Blunt resistance (half damage).
+slashres                         # Slash resistance (half damage).
+pierceres                        # Pierce resistance (half damage).
+coldaura                       3 # Frost Shield (3): Any enemy attacking this unit in melee will take some 
+allitemslots                     # Has the full set of item slots.
+reformloc                   1000 # If killed, the monster will reform in its home square.
+voidsanity                    4 # Void Sanity: 4: reduces insanity gains (like armor).
+female                           # Female.
+changetemp                   -50 # Makes square 50 degrees colder.
+iceprot                        2 # +2 armor in cold climate.
+startitem "Necklace of the Winter Queen"
+randomrare                    100 # 100% chance to spawn with a random rare magic item.
+descr "In the mystical realm of Elysium, the Frost Queen's Chosen stands as a figure of unparalleled power and divine significance. This exalted being is the living embodiment of the chilling embrace of winter, a conduit between the mortal world and the divine. The very mention of their name sends shivers down the spines of both children and adults, for the Frost Queen's Chosen is both feared and revered in equal measure. This figure is often regarded as a demi-god, chosen by the Frost Queen herself to be a living testament to the majesty of the winter season.  As a figure of awe and reverence, the Frost Queen's Chosen is the focal point of tales and legends, a living symbol of the enduring power of winter in Elysium."
+
+newmonster "Frost Queen's Dragon"
+copyspr "Frost Dragon"
+armor                          5 # Armor.
+hp                           105 # Hit Points.
+str                            9 # Strength.
+mor                            7 # Morale.
+mr                             9 # Magic Resistance.
+rank                           1 # Front rank.
+rangedweapon50s           13 276 # Icy Breath: d13 Cold damage.
+meleeweapon               25  11 # Bite: d25 Slash damage.
+meleeweapon               20  12 # Claw: d20 Slash damage.
+meleeweapon                5 485 # Tail Sweep: d5 Blunt damage.
+flying
+fast                          
+diseaseres
+charmres
+poisonres 100
+acidres 100
+iceprot                        2 # +2 armor in cold climate.
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+coldres                      100 # Cold immunity.
+acutesenses                      # Can see units with Stealth or Forest Stealth.
+fear                             # Causes Fear (1d7 vs morale) in adjacent squares.
+water                            # Amphibian: The monster can enter water squares and is immune to drowning damage.
+varregen                       2 #regen 2%
+unaging                          # Immune to aging effects like decay.
+nametype                      15 # Old Nordic male.
+randommisc                    50 # 50% chance to spawn with a random misc magic item.
+dragon                         1 # Non-elder dragon.
+descr "Just like knights hunt the Fire Dragons in our part of the realm, barbarians in the northern wastes will try to hunt down their fabled Frost Dragons. In stark contrast to the Fire Dragon's diet of bold knights, the northern barbarians are less of a treat for the Frost Dragons. This is most likely due to their custom of smearing themselves with thick layers of rancid seal blubber to protect against the cold. The Frost Dragon’s lair is often found by observing a large amount of dead warriors frozen solid in various poses. This particular Frost Dragon was bred by the Frost Queen and is indeed one of her pets. As unfathomable as that is to believe. Some say these Dragons have frozen even their ability to age and have gained the ability regenerate minor wounds."
+
+newmonster "Great Raven of Frost"
+spr1 "GreatRaven.tga"
+spr2 "GreatRaven2.tga"
+armor                          2 # Armor.
+hp                            110 # Hit Points.
+str                            9 # Strength.
+mor                            9 # Morale.
+mr                             7 # Magic Resistance.
+rank                           0 # Mid rank.
+siegeweapon               60  98 # Drop Boulder: d60 Blunt damage.
+spellweapon               27   2 # Frost Magic at level 2.
+meleeweapon               20  "Frost Talon" # d20 Slash damage + 7 cold damage.
+meleeweapon               20  "Frost Talon" # d20 Slash damage + 7 cold damage.
+meleeweapon               25  93 # Beak: d25 Slash damage.
+flying
+fear                           1 # Causes Fear (1d7 vs morale) within 1 square.                       
+huge                             # The monster is Huge (3x3 squares in size), can step over walls in combat, and uses one less AP than normal to move into any terrain square.
+animal                           # Vulnerable to weapons and spells that only affect animals; leaves an animal corpse on death.
+unaging                          # Immune to aging effects like decay.
+diseaseres
+charmres
+poisonres 100
+acidres 100
+coldres                      100 # Cold immunity.
+coldaura                       4 # Frost Shield (4): Any enemy attacking this unit in melee will take some armor-negating cold damage.
+fastheal
+acutesenses                      # Can see units with Stealth or Forest Stealth.
+primable                      -1 # Unit cannot be turned into a primal variant, even if it is an animal.
+iceprot                        1 # +1 armor in cold climate.
+randomrare                    100 # 100% chance to spawn with a random rare magic item.
+descr "The Great Raven of Frost, Harbinger of the Frost Queen's Fury. In the mystical realm of Elysium, the Great Raven emerges as an enigmatic force, a creature of immense proportions that echoes both the grace of the Giant Eagle and the ferocity of the ROC. This avian giant, standing as the favored companion of supremely powerful witches, possesses a majestic presence that commands both awe and fear.^^Unfettered by the passage of time, the Great Raven is ageless and untouched by the decay that plagues mortal beings. It stands as a testament to the enduring magic of the Frost Queen, its plumage retaining an eternal sheen."
+
+newmonster    "Permafrost"
+spr1 "Permafrost.tga"
+spr2 "Permafrost2.tga"                                          # 1274
+armor                          1 # Armor.
+hp                             24 # Hit Points.
+str                            4 # Strength.
+mor                            6 # Morale.
+mr                             5 # Magic Resistance.
+coldaura                       3 # Frost Shield (3): Any enemy attacking this unit in melee will take some armor-negating cold damage.
+fireres                      -50 # 50 Fire Vulnerability.
+coldres                      100 # 50 Fire Vulnerability.
+rank                           0 # Mid rank.
+spellweapon               27   1 # Frost Magic at level 1.
+meleeweapon                2  "Frost Talon" # d2 Slash damage + 7frost damage.
+meleeweapon                2  "Frost Talon" # d2 Slash damage + 7frost damage.
+flying           
+fast
+fastheal
+iceprot                        1 # +1 armor in cold climate.
+unaging                          # Immune to aging effects like decay.
+noleader                         # Even if this monster is a commander, it cannot lead other 
+diseaseres
+charmres
+poisonres 100
+acidres 100
+coldres                      100 # Cold immunity.
+farsight                       1 # Farsight: can see 1 square further than usual on the world map.
+spiritsight
+snowstealth
+immortal               
+immortalap                     8 # When the monster dies, it costs 8 AP to respawn.
+ainofollower                   1 # AI hint to always use this commander as a leader (not a subcommander).
+descr "Permafrost, Eternal Frost Scout of the Queen. In the ever-shifting realms of Elysium, the Permafrost emerges as an evolved embodiment of the once simple-minded Harpy. No longer confined to the bickering and groves, the Permafrost has ascended to an immortal existence in service to the Frost Queen, her icy touch elevating the Harpy to a formidable scout and servant. It radiates Frost when damaged."
+female                           # Female.
+nametype                      10 # Pangaea female.
+
+#Witch New Monster End----->
+
+#Recruitment----->
+#4su - Witch
+selectclass 4
+
+#                                               % No gold die iron
+addunitrec  "Androphag Spearman"              100  10   10   0    0
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+
+addunitrec  "Androphag Spearman"              100  20   20   0    0
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+
+addunitrec  "Androphag Archer"                100  10   15   0    0
+recxcost     3  15                            # 15 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+
+addunitrec  "Androphag Archer"                100  20   30   0    0
+recxcost     3  30                            # 30 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+
+addunitrec  "Androphag Cavalry"               100  10   30   0    10
+recxcost     3  25                            # 25 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+
+addunitrec  "Androphag Cavalry"               100  20   60   0    20
+recxcost     3  50                            # 25 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+
+#****after Frost Sorceress is Summoned****
+#                                               <chance> <nbr> <gold> <gold die> <iron>
+addunitrec  "Androphag Frost Pikemen"              100  10   15   0    5
+recxcost     3  10                            # 10 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+reclimiter "+Androphag Frost King"
+reclimiter "+Androphag Frost Lord"
+reclimiter "+Androphag Frost Knight"
+
+addunitrec  "Androphag Frost Pikemen"              100  20   30   0    10
+recxcost     3  20                            # 15 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+reclimiter "+Androphag Frost King"
+reclimiter "+Androphag Frost Lord"
+reclimiter "+Androphag Frost Knight"
+
+addunitrec  "Androphag Frost Archer"                100  10   20   0    0
+recxcost     3  20                            # 30 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+reclimiter "+Androphag Frost King"
+reclimiter "+Androphag Frost Lord"
+
+addunitrec  "Androphag Frost Archer"                100  20   40   0    0
+recxcost     3  40                            # 30 Fungus additional cost.
+reclimiter  "=Androphag"                       # The preceding offer can only be used to upgrade Androphag(s).
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+reclimiter "+Androphag Frost King"
+reclimiter "+Androphag Frost Lord"
+
+addunitrec  "Androphag Frost Cavalry"               100  5   75   0    30
+recxcost     3  100                            # 100 Fungus additional cost.
+reclimiter "+Androphag Frost King"
+
+addunitrec  "Androphag Frost Cavalry"               100  10   150   0    60
+recxcost     3  200                            # 200 Fungus additional cost.
+reclimiter "+Androphag Frost King"
+
+addunitrec  "Androphag Frost Cavalry"               100  20   300   0    120
+recxcost     3  400                            # 400 Fungus additional cost.
+reclimiter "+Androphag Frost King"
+
+addunitrec  "Frost Giant"                           100  1   65   0    25
+recxcost     3  125                            # 125 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec  "Frost Giant"                           100  2   130   0    50
+recxcost     3  250                            # 250 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec  "Frost Giant"                           100  3  195   0    75
+recxcost     3  375                            # 375 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec  "Winter Wolf"                           100  10  50   0    0
+recxcost     3  75                            # 450 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec  "Winter Wolf"                           100  20  100   0    0
+recxcost     3  150                            # 450 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec  "Frost Queen's Yeti"                           100  10  100   0    0
+recxcost     3  125                            # 450 Fungus additional cost.
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec  "Frost Queen's Frost Drake"                    100  10  75   0    0
+recxcost     3  100                            # 450 Fungus additional cost.
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec   "Great Raven of Frost"                        100  1  70    0    0 # once per offer; extra.
+recxcost     3  130                            # 85 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec   "Great Raven of Frost"                        100  2  140    0    0 # once per offer; extra.
+recxcost     3  260                            # 390 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addunitrec   "Great Raven of Frost"                        100  3  280    0     0 # once per offer; extra.
+recxcost     3  390                            # 390 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+#----mercenaries-----                           <chance> <nbr> <gold> <gold die> <iron>
+addmercrec   "Frost Queen's Dragon"                 7     2      300      60        75
+recxcost     3  400                            # 400 Fungus additional cost.
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addmercrec   "Frost Queen's Yeti"                   8      15     150      20       30
+recxcost     3  200                            # 200 Fungus additional cost.
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addmercrec   "Frost Queen's Frost Drake"            7     10      130      20       25
+recxcost     3  200                            # 200 Fungus additional cost.
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addmercrec   "Frost Queen's Mist Warrior"           7     25      100       20      15
+recxcost     3  150                            # 150 Fungus additional cost.
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+
+#----Commanders-----
+addcomrec   "Witch's Apprentice"              4      45  10    0 # once per offer; extra.
+templerec                                     # +3% to chance per temple owned, to a max of +15% for 5+ temples.
+reclimiter "-Frost Witch"
+reclimiter "-Frost Sorceress"
+
+addcomrec   "Androphag Lord"                  7      45  15    0 # once per offer; extra.
+recxcost     3  20                            # 30 Fungus additional cost.
+reclimiter "+Witch"
+reclimiter "+Hag"
+
+addcomrec   "Androphag Knight"                14      35  10    0 # once per offer; extra.
+recxcost     3  10                            # 30 Fungus additional cost.
+reclimiter "+Witch"
+reclimiter "+Hag"
+
+addcomrec   "Androphag Squire"                20      25  10    0 # once per offer; extra.
+reclimiter "+Witch"
+reclimiter "+Hag"
+
+
+#****after Frost Sorceress is Summoned****
+addcomrec   "Frost Witch's Apprentice"             12      45  10    0 # once per offer; extra.
+recxcost     3  35                                 # 35 Fungus additional cost.
+libraryrec
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+
+addcomrec   "Frost Witch"                           6      65  20    0 # once per offer; extra.
+recxcost     3  50                                  # 50 Fungus additional cost.
+libraryrec
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+
+addcomrec   "Androphag Frost Squire"                20      25  10    0 # once per offer; extra.
+recxcost     3  5                                   # 5 Fungus additional cost.
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+
+addcomrec   "Androphag Frost Knight"                14      35  10    0 # once per offer; extra.
+recxcost     3  30                            # 30 Fungus additional cost.
+reclimiter "+Frost Witch"
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+
+addcomrec   "Androphag Frost Lord"                  7      45  15    0 # once per offer; extra.
+recxcost     3  60                            # 60 Fungus additional cost.
+reclimiter "+Androphag Frost King"
+reclimiter "+Frost Queen's Chosen"
+
+addcomrec   "Androphag Frost King"                  1      130  30    0 # once per offer; extra.
+recxcost     3  200                            # 100 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+
+addcomrec   "Goblin Chieftain"                  7  25  20    0 # once per offer; extra.
+
+addcomrec  "Frost Titan"                        5  110   30   0    30
+recxcost     3  150                            # 150 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+addcomrec   "Permafrost"                   100   60  0    0 # once per offer; extra.
+recxcost     3  120                            # 120 Fungus additional cost.
+reclimiter "+Frost Sorceress"
+reclimiter "+Frost Queen's Chosen"
+recterr     -1100                               #Frost Citadels
+
+#Rituals----->
+#modifying old rituals Start <--
+selectritual "Major Summoning" 1
+level 9
+
+selectritual "Minor Summoning" 1
+level 9
+
+selectritual "Ritual of Grand Mastery" 4 #Witch lvl 3 mastery
+cost 3 400 # 400 Fungus
+terr                 -1 # Required terrain: anywhere.
+
+selectritual "Swamp Guardians"
+level 9
+
+selectritual "Marshlands"
+clearritspec
+level 9
+
+selectritual "Call Giants" 1 # Frost giants - Call Giants 
+rebateterr20         -1100 # Ritual is 25% (NOT 20%!) cheaper in this terrain: Frost Citadels.
+
+selectritual "Call Winter Wolves"  
+rebateterr20         -1100 # Ritual is 25% (NOT 20%!) cheaper in this terrain: Frost Citadels.
+
+#moddifying old rituals End -->
+
+newritual     "Rite of Savage Allegiance"
+ritpow                 	4 # Witch
+level                 	1
+levelreq				1
+aiapprspam				90
+free
+closewin
+apcost					4
+terr                 	-23 # Citadels 
+aiwhere					-23
+nearby3req               -10 # forests, jungles and swamps
+summoning
+addstring "7*Androphag"
+addstring "10*Androphag"
+addstring "15*Androphag"
+monplayerreq
+addstring "(&)Witch's Apprentice"
+addstring "(&)Frost Witch's Apprentice"
+minmonreq              1 #atleast Witch's Apprentice or Frost Witch's Aprpentice should be at location of spell cast
+addstring     "(&)Witch's Apprentice"
+addstring "(&)Frost Witch's Apprentice"
+soundfx               	57
+descr "In the mystical realm of Elysium, the Rite of Savage Allegiance is a dark and ominous ritual that Witch apprentices use to gather and command the ruthless and predatory Androphagi, who are known for their cannibalistic and evil nature. Summons a random group of Androphag to serve the witch.^^Can only be cast near swamps, the homes of the Androphages."
+
+newritual     "Raven Familiar"                                                 # 296
+ritpow                4 # witch
+level                  1
+cost              3    5 # 5 Fungus
+free
+terr                 -42 # Required terrain: any land.
+airare                25 # Only 25% of normal chance that AI will cast this ritual.
+descr "The Witch summons a raven Familier that will move around randomly, gathering information.  The raven is stealthy, but it can be attacked by armies able to see stealthy units.  It cannot claim lands."
+summoning                # The ritual will summon the monsters specified in a random string.
+addstring     "Raven Spy"
+
+newritual "Plant Forest"
+ritpow                 	4 # Witch
+level 1
+terr -71
+aiwhere -71
+aialways 30
+descr "Planting new trees growing into forest. This forest will grow fungus that the Witch will use to increase her coven."
+start
+cost 0 15
+cost 3 10
+apcost 1
+alterloc 2
+free
+closewin
+
+newritual "Tame Desert"
+ritpow                 	4 # Witch
+level 1
+terr -110 #Desert Like Terrain
+aiwhere -110 #Desert Like Terrain
+descr "Using witchcraft and some frost salts, the Witch is able to tame the desert and turn it into Savannas."
+start
+planereq 0 #Elysium only 
+cost 0 5
+cost 3 10
+apcost 1
+alterloc 119 #savanna
+free
+closewin
+
+newritual "Restore Forest"
+ritpow                 	4 # Witch
+level 1
+terr 36 #dead forest
+aiwhere 36 #dead forest
+aialways 5
+descr "Planting new trees growing into forest. This forest will grow fungus that the Witch will use to increase her coven."
+start
+planereq 0 #Elysium only 
+cost 0 5
+cost 3 10
+apcost 1
+alterloc 2
+free
+closewin
+
+newritual "Plant Jungle"
+ritpow                 	4 # Witch
+level 1
+terr 119
+aiwhere 119
+aialways 5
+descr "Planting new trees onto savanna ground and let them grow into a jungle. This Jungle will grow fungus that the Witch will use to increase her coven."
+start
+cost 0 20
+cost 3 10
+apcost 1
+alterloc 115
+free
+closewin
+
+newritual "Settle Witches"
+ritpow                 	4 # Witch
+level 1
+terr -38
+aiwhere -38
+aialways 30
+planereq				0
+nearby3req				-23 #Citadels
+nonearby1req			901 #Witchwood Village
+descr "Starts a new witch settlement within the forests and jungles that produces gold a small amount of fungus, and is a center for trade.^Cannot be built right next to each other. Must be within 3 spaces of a citadel."
+cost 0 15
+alterloc 901             #Witchwood Village
+free
+closewin
+
+newritual "Construct Frost Palace"
+ritpow                 	4 # Witch
+level 3
+terr -10
+aiwhere -10
+nonearby7req			902 #Ice Shroud Stronghold
+descr "With the help of the Frost Sorceress, one can start a new Ice Shroud Stronghold within the forests and jungles or swamps. Must be build atleast 7 spaces away from another Ice Shroud Stronghold."
+free
+monplayerreq 
+addstring "(&)Frost Sorceress"
+addstring "(&)Frost Queen's Chosen"
+cost 3 400
+cost 1 75
+alterloc 902             #Ice Shroud Stronghold
+closewin
+
+newritual     "Minor Witchcraft Summoning"                                           #  94
+ritpow                 4 # Witchery
+level                  1
+cost              3   35 # 15 Fungus
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+addstring     "3d6*Frog"
+addstring     "2d4*Giant Snail"
+addstring     "2*Crocodile"
+addstring     "Marsh Worm"
+addstring     "(!)Black Cat Familiar"     # If a Black Cat Familiar is present, it will become a Magic Cat Familiar; otherwise, if a Magic Cat Familiar is present, it will gain a spell. If neither is present, summon a Black Cat Familiar. Actual base control chance: 100%.
+addstring     "1d2*Bog Beast"
+addstring     "2*Swamp Monster"
+addstring     "2*Swamp Thing"
+addstring     "1d3*Hydra Hatchling"
+addstring     "2*Swamp Ghost"
+addstring     "2*Giant Toad"
+descr "With this ritual the Witch will brew a decoction that is used to summon and control some creatures from the ancient days of Elysium."
+
+newritual     "Major Witchcraft Summoning"                                           #  98
+ritpow                 4 # Witchery
+level                  2
+cost              3   75 # 75 Fungus
+soundfx
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+sum0chance            2 # % chance to summon first string instead of a random string among the others.
+sum1chance            4 # % chance to summon first string instead of a random string among the others.
+addstring	  "1d3*Lake Troll & 1d2*Lake Troll Warrior"
+addstring	  "1d2*Forest Troll"
+addstring     "2*Gelatinous Cube"
+addstring     "Creeping Doom"
+addstring     "Monster Toad"
+addstring     "Giant Crocodile"
+addstring     "Hydra"
+addstring     "Creeping Doom"
+addstring     "Rootmonster"
+addstring     "Will o'the Wisp"
+addstring     "c*Doppelganger Captain"
+addstring     "Doppelganger"
+addstring     "1d2+1*Swamp Drake"
+addstring     "Monster Snail"
+addstring     "1d2+1*Green Ooze"
+addstring     "1d6*Swamp Ghost"
+addstring	  "1d6*Troll"
+addstring     "(!)Homunculus"     # If a Homunculus is present, it will become an Evolved Homunculus; otherwise, if an Evolved Homunculus is present, it will gain a spell. If neither is present, summon a Homunculus. Actual base control chance: 100%.
+descr "With this ritual the Witch will brew a decoction that is used to summon and control some of the more powerful creatures from the ancient days of Elysium.  The more fungi used, the greater the chance of managing to control the creatures that appear."
+
+newritual     "Supreme Witchcraft Summoning"                                           #  98
+ritpow                 4 # Witchery
+level                  3
+monplayerreq
+addstring "(&)Frost Sorceress"
+cost              3   600 # 600 Fungus
+terr                 -42 # Required terrain: any land.
+summoning                # The ritual will summon the monsters specified in a random string.
+rarestart
+soundfx
+addstring     "c*Mother of Monsters & 2d6*Doppelganger &c*Doppelganger Captain & 2d6*Swamp Ghost"
+addstring     "Wyrm & 3d*6Swamp Drakes"
+addstring     "c* & 2d6*Swamp Ghost"     # Unique (x3: Alecto, Tisiphone, and Megaera).
+addstring     "c*Gorgon & 2d6*Swamp Ghost"     # Unique (x2: Stheno and Euryale).
+addstring     "c*Mortal Gorgon & 3d6*Winter Wolf"     # Unique (Medusa).
+addstring     "2*Dracolion"
+addstring     "Catoblepas & 4d6*Swamp Monster"
+addstring     "Ancient Hydra & 2d6*Hydra & 4d6*Hydra Hatchlings"
+addstring     "Ancient Presence & 6d6*Doppelganger"
+addstring     "Swamp God & 2d6*Swamp Monster & 2d6*Swamp Thing & 1d6*Rootmonster"
+descr "With the help of the Frost Sorceress, Witches can brew a decoction that can be used to summon and control some of the most powerful creatures from the ancient days of Elysium."
+
+newritual     "Covenant with the Frost Queen"                                           #  98
+ritpow                  4 # Witchery
+level                   3
+maxcast                1 # Ritual cannot be cast more than 1 time(s) by a given player.
+aialways                999 # AI will always try to cast this ritual, and make long term plans to do so.
+cost                    3   777 # 999 Fungus
+terr                    26 # Tower.
+aiwhere                 26 # Tower.
+alterloc 902         # Ice Shroud Stronghold
+apcost 8
+minmonreq              1 #atleast 1 Hag should be at location of spell cast
+addstring     "(&)Hag"
+monplayerreq
+addstring "(&)Hag"
+promotion 1
+addstring "Hag"
+addstring "Frost Sorceress"
+free
+descr "Form a powerful Covenant with the Frost Queen and be promoted into a Frost Sorceress. Can only be cast once."
+closewin
+soundfx
+
+newritual     "Blessing of the Frost Queen"                                           #  98
+ritpow                  4 # Witchery
+level                   2
+aialways                10
+cost                    3   1000 # 1000 Fungus
+terr                    902 # Tower.
+aiwhere                 902 # Tower.
+apcost 4
+minmonreq              1 #atleast 1 Hag should be at location of spell cast
+addstring     "(&)Witch's Apprentice"
+addstring     "(&)Witch"
+addstring     "(&)Hag"
+addstring     "(&)Androphag Lord"
+addstring     "(&)Androphag Knight"
+monplayerreq
+addstring "(&)Frost Sorceress"
+promotion 1
+addstring "Androphag Lord"
+addstring "Androphag Frost Lord"
+promotion 1
+addstring "Androphag Knight"
+addstring "Androphag Frost Knight"
+promotion 1
+addstring "Hag"
+addstring "Frost Sorceress"
+promotion 1
+addstring "Witch"
+addstring "Frost Witch"
+promotion 1
+addstring "Witch's Apprentice"
+addstring "Frost Witch's Apprentice"
+free
+descr "The Frost Queen blesses the Witch's forces, bestwoing upon them her power and influence.^Turns Androphage Knights and Lords, Hags, Witches, and Witch's Apprentices into their Frost equivalents (one of each unit per ritual)."
+closewin
+soundfx
+
+newritual     "Summon Frost Knight"                                           #  98
+ritpow                  4 # Witchery
+level                   2
+aialways                10
+cost                    3   130 # 130 Fungus
+terr                    902 # Ice Shroud Stronghold.
+aiwhere                 902 # Ice Shroud Stronghold.
+monplayerreq
+addstring "(&)Frost Sorceress"
+addstring "(&)Frost Queen's Chosen"
+addstring "(&)Androphag Frost King"
+summoning
+addstring "c*Androphag Frost Knight"
+free
+descr "The Frost Sorceress uses her power to summon her your loyal servant, the Frost Knight to help her serve the Frost Queen."
+soundfx
+
+newritual     "Summon Frost Apprentice"                                           #  98
+ritpow                  4 # Witchery
+level                   2
+aialways                10
+cost                    3   100 # 100 Fungus
+terr                    902 # Ice Shroud Stronghold.
+aiwhere                 902 # Ice Shroud Stronghold.
+monplayerreq
+addstring "(&)Frost Sorceress"
+addstring "(&)Frost Queen's Chosen"
+addstring "(&)Androphag Frost King"
+summoning
+addstring "c*Frost Witch's Apprentice"
+free
+descr "The Frost Sorceress or Androphag Frost King, uses their influence to summon a loyal Apprentice to help serve the Frost Queen."
+soundfx
+
+newritual     "Summon Frost Witch"                                           #  98
+ritpow                  4 # Witchery
+level                   3
+aialways                10
+cost                    3   220 # 220 Fungus
+terr                    902 # Ice Shroud Stronghold.
+aiwhere                 902 # Ice Shroud Stronghold.
+monplayerreq
+addstring "(&)Frost Sorceress"
+addstring "(&)Frost Queen's Chosen"
+summoning
+addstring "c*Frost Witch"
+free
+descr "The powerful servant of the Frost Queen, uses her power and influence to summon her loyal servant, the Frost Witch to help her serve the Frost Queen."
+soundfx
+
+newritual     "Summon Frost Brother, the Frost King"                                           #  98
+ritpow                  4 # Witchery
+level                   3
+aialways                15
+cost                    3   450 # 450 Fungus
+terr                    902 # Ice Shroud Stronghold.
+aiwhere                 902 # Ice Shroud Stronghold.
+apcost 6
+monplayerreq
+addstring "(&)Frost Sorceress"
+addstring "(&)Frost Queen's Chosen"
+summoning
+addstring "c*Androphag Frost King"
+free
+descr "The powerful servant of the Frost Queen, uses her power and influence to summon her fellow Covenant brother, the Androphag Frost King, to help her serve the Frost Queen."
+closewin
+soundfx
+
+newritual     "Rite of the Queen's Chosen"                                           #  98
+ritpow                  4 # Witchery
+level                   3
+#nonearby99req           902
+aialways             999 # AI will always try to cast this ritual, and make long term plans to do so.
+cost                    3   1500 # 1500 Fungus
+terr                    902 # Tower.
+aiwhere                 902 # Tower.
+alterloc 902         # Ice Shroud Stronghold
+apcost 8
+minmonreq              1 #atleast 1 Hag should be at location of spell cast
+addstring     "(&)Frost Sorceress"
+monplayerreq
+addstring "(&)Frost Sorceress"
+promotion 1
+addstring "Frost Sorceress"
+addstring "Frost Queen's Chosen"
+updatehome               # Updates home (immortal resurrection location) for target unit to where he stands.
+maxcast 3
+free
+descr "In the mystical world of Elysium, the Rite of the Frost Queen's Chosen is a hallowed ceremony of profound significance, marking the ascension of the Frost Sorceress to the exalted status of the Frost Queen's Chosen. This ritual unveils a figure of extraordinary power and permanence, akin to a demi-god, who is sometimes revered as a local deity.^Can only be cast a total of 3 times."
+soundfx
+
+newritual     "Summon Army Of The Frost"                                           
+ritpow                  4 # Witchery
+level                   3
+#aialways                15
+cost                    3   2800 # 2800 Fungus
+terr                    902 # Ice Shroud Stronghold.
+aiwhere                 902 # Ice Shroud Stronghold.
+#nearby1req				902 #Ice Shroud Stronghold
+rebateterr50 -45  #Ritual cost is 50% cheaper in this terrain: elemental plane of water
+apcost 4
+monplayerreq
+addstring "(&)Frost Queen's Chosen"
+summoning
+addstring "c*Androphag Frost King & 20*Androphag Frost Cavalry & 60*Androphag Frost Pikemen & 80*Androphag Frost Archer & 40*Frost Queen's Frost Drake & 40*Frost Queen's Yeti & 3*Frost Queen's Dragon & 2*Frost Titan & 40*Winter Wolf & 2*Great Raven of Frost"
+descr "The Frost Queen sends down some members of her army to aid her chosen.^Requires player to own a 'Frost Queen's Chosen'. Ritual is 50% more effective when cast on the Elemental plan of Water."
+soundfx
+
+newritual     "Mass Teleportation"
+ritpow                  4 # Witchery
+level                   4
+free
+cost                    3   1200 # 1000 Fungus
+apcost					8
+centercaster             # Center screen on caster.
+chooseterrloc			-1
+teleportloc				2
+airare                  5 #Reduces the chance of the AI trying to use this ritual. Chance is the chance of casting the ritual and can be from 1-99. -1 is a special value meaning never cast it.
+minmonreq 				1
+addstring 				"(&)Frost Queen's Chosen"
+monplayerreq	
+addstring "(&)Frost Queen's Chosen"
+soundfx               	57
+closewin
+descr "The Frost Queen's Chosen teleports her entire army to a desired location."
+
+newritual     "Major Frost Summoning"                                           #  98
+ritpow                 4 # Witchery
+level                  2
+monplayerreq
+addstring "(&)Frost Witch"
+addstring "(&)Frost Sorceress"
+addstring "(&)Frost Queen's Chosen"
+rebatelvl				4
+cost              3   125 # 125 Fungus
+terr                 -42 # Required terrain: any land.
+soundfx
+summoning                # The ritual will summon the monsters specified in a random string.
+sum0chance            5 # % chance to summon first string instead of a random string among the others.
+sum1chance            3 # % c  hance to summon first string instead of a random string among the others.
+sum2chance            2 # % chance to summon first string instead of a random string among the others.
+sum3chance            7 # % chance to summon first string instead of a random string among the others.
+sum4chance            10 # % chance to summon first string instead of a random string among the others.
+addstring     "Frost Queen's Dragon & 3*Frost Queen's Frost Drake"
+addstring     "c*Frost Titan"
+addstring     "c*Androphag Frost Lord & 1d6+3*Androphag Frost Cavalry"
+addstring     "Frost Giant"
+addstring     "Great Raven of Frost"
+addstring     "4d6*Frost Queen's Mist Warrior"
+addstring     "2d*6Frost Queen's Yeti"
+addstring     "2d6*Frost Queen's Frost Drake"
+addstring     "3d6*Winter Wolf"
+descr "With this ritual the Frost Sorceress will brew a decoction that is used to summon and control some of the more powerful creatures from the ancient Frost days of Elysium."
+
+newritual     "Enigmatic Frost Gate"                                             #  90
+descr "This ritual creates a gate between the current location in Elysium and a random location at the Elemental plane of water. Can only be cast once. Choose location wisely."
+ritpow                 4 # Witchery
+level                  3
+cost              3  800 # 800 fungus
+nearby1req            902 #Ice Citadel
+terr                 107 # Swamp
+aiwhere              107
+noportalreq				1
+monplayerreq  		   1 # The monsters in addstring "(&)…​" must be at least 'min' in number at current location.
+addstring 				"(&)Frost Queen's Chosen"
+planereq               0 #Elysium
+portalroom            -49 #water citadels
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+maxcast                1
+centerloc                # Center screen on target location.
+rarestart
+
+newritual     "Plane of Frost Teleportation"
+ritpow                  4 # Witchery
+level                   2
+#cost                    3   200 # 200 Fungus
+cost                    3   0 # 200 Fungus
+free
+minmonreq   		   1 # The monsters in addstring "(&)…​" must be at least 'min' in number at current location.
+addstring 				"(&)Frost Queen's Chosen"
+apcost					2
+planereq               0 # Can only be cast on this plane: Elysium.
+setplane               8 # Randomloc etc. will use this plane: Elemental Planes.
+randterrloc           54 # Sets target location to a random terrain of this type on the active plane: Frozen Waste.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+teleportloc            2 # Teleport caster's entire army to target location.
+centerloc                # Center screen on target location.
+closewin                 # Closes cast ritual window.
+#airare                -1 # AI will never cast this ritual.
+rarestart                # Reduced chance of starting with this ritual.
+descr "The Frost Queen's Chosen teleports her entire army to a desired location. Within the Plane of Frost."
+
+newritual     "Return to Elysium Teleportation"
+ritpow                  4 # Witchery
+level                   3
+cost                    3   300 # 300 Fungus
+minmonreq   		   1 # The monsters in addstring "(&)…​" must be at least 'min' in number at current location.
+addstring 				"(&)Frost Queen's Chosen"
+apcost					2
+planereq               8 # Can only be cast on this plane: Elemental Planes.
+setplane               0 # Randomloc etc. will use this plane: Elysium Plane.
+#randterrloc           902 # Sets target location to a random terrain of this type on the active plane: Deep Sea.
+randterrloc           107 # Sets target location to a random terrain of this type on the active plane: Deep Sea.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+teleportloc            2 # Teleport caster's entire army to target location.
+centerloc                # Center screen on target location.
+closewin                 # Closes cast ritual window.
+#airare                -1 # AI will never cast this ritual.
+rarestart                # Reduced chance of starting with this ritual.
+descr "Using the power of the Frost Queen, the witch's entire army is teleported back to Elysium."
+
+newritual "Summon Swamp Guardians"
+ritpow                 4 # Witchery
+level                  1
+cost              3   35 # 18 Fungus
+free
+terr                 -1102 # Required terrain: Swamp,Forest,Jungle Terrains
+aiwhere              -1102 # Required terrain: Swamp,Forest,Jungle Terrains
+aialways              15 # Extra 15% chance that AI will try to cast this ritual if it currently can, but it will not make long term plans to do so.
+summoning                # The ritual will summon the monsters specified in a random string.
+addstring     "2d6*Blood Fungus"
+addstring     "2d6*Devil Fungus"
+addstring     "2d6*Death Fungus"
+addstring     "3*Blue Giant"
+addstring     "3*Giant Mushroom"
+addstring     "3*Giant Morel"
+descr "This ritual summons some creatures that are suitable for staying in one place and guarding it.  The swamp guardians can only appear in forest or swamplike terrains."
+
+newritual     "Convert to Marshlands"                                                #  96
+ritpow                 4 # Witchery
+level                  1
+free
+cost              3   25 # 25 Fungus
+terr                   -1103 # Required terrain: villages and smaller settlements.
+aiwhere                   -1101 # Required terrain: villages and smaller settlements.
+alterloc             107 # Change target location's terrain to: Swamp.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+airare                5 # Only 5% of normal chance that AI will cast this ritual.
+descr "When man arrived in Elysium many swamps were drained and became fertile farms and villages.  This ritual lets the farmlands return to their original swampy state."
+ainosimul              1 # An AI player may not have more than one commander plan to cast this ritual at once.
+
+newritual     "Drain Swamp"                                                #  96
+ritpow                 4 # Witchery
+level                  1
+free
+cost              3   25 # 25 Fungus
+terr                   -20 # Required terrain: Swamps and Bogs
+aiwhere                   -20 # Required terrain: Swamps and Bogs
+alterloc             0 # Change target location's terrain to: plain.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+airare                10 # Only 10% of normal chance that AI will cast this ritual.
+descr "When man arrived in Elysium many swamps were drained and became fertile farms and villages. There comes a time when the Witch must do this as well."
+ainosimul              1 # An AI player may not have more than one commander plan to cast this ritual at once.
+
+newritual     "Cultivate Iron Bog"                                                #  96
+ritpow                 4 # Witchery
+level                  1
+free
+cost              3   25 # 25 Fungus
+cost              1   15 # 15 iron
+terr                   -10 # Required terrain: forests, jungles and swamps.
+aiwhere                   -10 # Required terrain: forests, jungles and swamps.
+alterloc             97 # Change target location's terrain to: Iron Bog.
+nonearby3req          97 # Can't be 3 tiles near another iron bog  
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+descr "The Witch uses fungus to cultivate a marsh, Frost salts to keep the marsh productive even in the winter, and adds iron into the ingredient to create a Iron Bog.^Must be 3 spaces away from another Iron Bog."
+ainosimul              1 # An AI player may not have more than one commander plan to cast this ritual at once.
+
+#Rituals End----->
+#Witch End-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+
+
+#Generic-----------------------------------------------------------------
+#Terrain----->
+selectterr      107 # Swamp
+herbs             2 # Herbs:  2
+fungus            5 # Fungus:  5
+snowok
+
+selectterr      97 # Iron Bog
+herbs             2 # Herbs:  2
+fungus            4 # Fungus:  4
+snowok
+
+selectterr        2 # Forest
+herbs             2 # Herbs:  2
+fungus            2 # Fungus:  2
+
+selectterr       26 # Tower
+clearspec
+name                 "Tower"
+fungus            2 # Fungus:  2
+dead              1 # The location starts with 1 * d6 corpses in it.
+apcost            1 # Action Point cost for moving through the terrain: 1
+batmap           14 # Battle map: witchtower.
+#siegeable           # Siege weapons can be used in battles fought in this terrain square.
+irongate          # The gate of the fort is iron.
+citadel             # The terrain functions as a citadel when owned.
+invisible           # Terrain on top of the background is not drawn, but the grass will still be drawn.
+farsight            # The terrain gives increased vision range when there are units present there.
+
+selectterr       15 # Silver Mine
+gold              5 # Gold:  5
+iron              5 # Iron:  5
+
+selectterr       34 # Gold Mine
+gold             15 # Gold: 15
+iron              10 # Iron:  10
+
+
+selectterr       16 # Graveyard
+hands             2 # Hands:  2
+
+selectterr      248 # Small Graveyard
+hands            1 # Hands:  1
+
+selectterr      310 # Cloud Graveyard
+hands             2 # Hands:  2
+
+selectterr      153 # Gallows
+hands             5 # Hands:  5
+
+selectterr 147 #Ghost Village
+hands             3 # Hands:  3
+
+
+#Rituals----->
+newritual     "Ritual of Supreme Mastery"                                   #  20
+ritpow                 1 # Necromancy
+level                  4
+cost              5  960 # 240 Hands
+newrit                 4 # Caster will learn a new ritual of level 4.
+#levelup                3 # Level up to new monster (determined by mastery command on monster) if below level 3.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+rebatelvl              4 # Ritual can be cast for half price if caster's power level is greater than or equal to 3.
+free                     # Always start with this ritual in addition to the others.
+notforpoor               # Ritual casters that have a negative rebate cannot learn this ritual.
+nomonreq                 # Monsters in strings beginning with "(-)" must not be here.
+addstring "(-)Archlich Residual Necromancy Husk"
+descr "This ritual grants the caster a new fourth level ritual.  If the caster is currently unable to cast fourth level rituals, it will be leveled up as well."
+
+selectritual "Ritual of Grand Mastery"
+nomonreq                 # Monsters in strings beginning with "(-)" must not be here.
+addstring "(-)Archlich Residual Necromancy Husk"
+
+newritual     "Ritual of Supreme Mastery"                                   #  20
+ritpow                 4 # Witch
+level                  4
+cost              3  1200 # 240 Hands
+newrit                 4 # Caster will learn a new ritual of level 4.
+#levelup                3 # Level up to new monster (determined by mastery command on monster) if below level 3.
+soundfx               57 # Sound effect when the ritual is cast: orchhit.smp (Summoning).
+rebatelvl              4 # Ritual can be cast for half price if caster's power level is greater than or equal to 3.
+free                     # Always start with this ritual in addition to the others.
+notforpoor               # Ritual casters that have a negative rebate cannot learn this ritual.
+descr "This ritual grants the caster a new fourth level ritual.  If the caster is currently unable to cast fourth level rituals, it will be leveled up as well."
+
+
+#Misc----->
+#No Plane Lock, no game over if last citidel in another plane other than Elysium
+selectclass 1
+otherplanar
+
+selectclass 2
+otherplanar
+
+selectclass 3
+otherplanar
+
+selectclass 4
+otherplanar
+
+selectclass 5
+otherplanar
+
+selectclass 6
+otherplanar
+
+selectclass 7
+otherplanar
+
+selectclass 8
+otherplanar
+
+selectclass 9
+otherplanar
+
+selectclass 10
+otherplanar
+
+selectclass 11
+otherplanar
+
+selectclass 12
+otherplanar
+
+selectclass 13
+otherplanar
+
+selectclass 14
+otherplanar
+
+selectclass 15
+otherplanar
+
+selectclass 16
+otherplanar
+
+selectclass 17
+otherplanar
+
+selectclass 18
+otherplanar
+
+selectclass 19
+otherplanar
+
+selectclass 20
+otherplanar
+
+selectclass 21
+otherplanar
+
+selectclass 22
+otherplanar
+
+selectclass 23
+otherplanar
+
+selectclass 24
+otherplanar
+
+selectclass 25
+otherplanar
+
+selectclass 26
+otherplanar
+
+selectclass 27
+otherplanar
+
+
+#Generic End-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+#-------------------------<> Start Units
+
+#4su - Necromancer
+selectclass 2
+clearstartunits
+addstartterr 16
+#addstartterr 153
+addstartcom "Grave Digger"
+addstartcom "Grave Digger"
+addstartcom "Necromancer's Apprentice"
+addstartunits "Armored Longdead" 10
+addstartunits "Bane Fire Archer" 10
+setmaincom "Necromancer"
+
+#4su - Witch
+selectclass 4
+clearstartunits
+clearstartterr
+likesnorth 1
+addstartterr 2
+addstartterr 107
+addstartterr 901
+addstartcom "Witch's Apprentice"
+addstartcom "Witch's Apprentice"
+addstartcom "Androphag Knight"
+addstartunits "Androphag Cavalry" 5
+addstartunits "Androphag Spearman" 15
+addstartunits "Androphag Archer" 10
+setmaincom "Witch"
+
+#-------------------------<> Start Units End
+
+#-------------------------<> Generic Recruitments Start
+
+selectclass  1 # Baron                       <chance> <nbr> <gold> <gold die> <iron>
+addcomrec  "Earthshaper"                       6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  2 # Necromancer
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  3 # Demonologist
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  4 # Witch
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Frost Queen's Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Frost Queen's Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  5 # High Priestess
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  6 # Bakemono
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  7 # Barbarian
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  8 # Senator
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass  9 # Pale One
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 10 # Druid
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 11 # Burgmeister
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 12 # Warlock
+#addcomrec  "Earthshaper"                           8  100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+
+selectclass 13 # Priest King
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 14 # Troll King
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 20 # Enchanter
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 16 # Beholder
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 17 # Archmage
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 18 # Goblin King
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 19 # High Cultist
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 20 # Dwarf Queen
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 21 # Voice of El
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 22 # Illusionist
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 23 # Markgraf
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 24 # Dryad Queen
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 25 # Scourge Lord
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 26 # Cloud Lord
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 27 # Kobold King
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 28 # Maharaja
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+
+selectclass 29 # Raksharaja
+addcomrec  "Earthshaper"                           6   100  20   0
+addunitrec  "Catapult"                        100  1   25   0   50
+addunitrec  "Mist Warrior"                    100  10  300   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+addunitrec  "Yeti"                            100  5   250   0    0
+recterr      -1100                              # The preceding offer can only be recruited in terrain: Frost Citadels.
+#-------------------------<> Generic Recruitments End
+
+#Events Start-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
+
+#playerevent
+#+turnnbr 0
+#+player 30
+#setvar 2001 0 	#Covenant with the Frost Queen
+#setvar 2002 0	#Frost Queen's Chosen
+#setvar 2003 0	#Summoned The Frost Queen
+#setvar 2004 0	#Permafrost
+#setvar 2001 0 	#Guard Tower Reclamation Switch
+#setvar 2002 0	#Ballista Upgrade Switch
+#setvar 2003 0	#Royal Vassal Switch
+#setvar 2004 0 	#Monastery Switch
+#setvar 2005 0	#Bandit Pardon Ammunition
+#setvar 2006 0	#Unicorn Champion Switch
+#setvar 2007 0 	#Enchanter Contract Switch
+#setvar 2008 0	#Peasant Uprising Switch
+#setvar 2009 0 	#Dragon Marriage Switch
+#setvar 2010 0	#Wizard Conspiracy Switch
+#setvar 2011 0	#Peasant Saint Switch
+#setvar 2012 0	#Merchant Conspiracy Switch
+#setvar 2001 0	#Monastery Switch 2
+#setvar 2002 0 	#Stage Upgrade 1 Switch
+#setvar 2003 0 	#Wizard Conspiracy Ammunition
+#setvar 2004 0	#Monastery Inquisition Switch
+#setvar 2005 0 	#Peasant Pilgrim Ammunition
+#setvar 2006 0	#Angel Pilgrim Ammunition
+#setvar 2007 0 	#Lost Pilgrim Ammunition
+#setvar 2008 0 	#Merchant Assassin Ammunition
+#setvar 2009 0 	#Merchant Corruption
+#setvar 2010 0	#Lost Wizard Ammunition
+#endevent
+#
+#playerevent
+#+varequal 2001 0
+#+turnnbr 2
+#+player 0
+#+plane 0
+#+terrain 902
+#+hasunithere -2 "Frost Sorceress"
+#message -1 "Somewhere in Elysium, the Hag undergoes a metamorphosis. Shedding her former self, born anew through a covenant with the Frost Queen, she emerges as a Frost Sorceress, wielding the frigid might of level 3 frost magic.^^The Frost Sorceress now stands as a harbinger of icy power, ready to weave frost and enchantment upon the realms of Elysium."
+#setvar 2001 1
+#endevent 
+#
+#playerevent
+#+varequal 2001 1
+#+turnnbr 2
+#+player 0
+#+plane 0
+#+terrain 902
+#+hasunithere -2 "Frost Queen's Chosen"
+#message -1 "Rumors have reached you about the awakening of a Devine Servant of the Frost Queen; the Frost Queen's Chosen!^^A figure of unparalleled power, this exalted being is the living embodiment of winter's chilling embrace. A conduit between the mortal and the divine, their name sends shivers down spines, feared and revered alike. Now a Demi-God, the Chosen stands as a living testament to winter's majesty.^^The enduring power of winter in Elysium has found its living symbol in the resplendent form of the Frost Queen's Chosen.^^Winter is Coming."
+#setvar 2001 2
+#endevent 
+#
+#playerevent
+#+varequal 2001 2
+#+player -1
+##+plane 0
+##+terrain 902
+##+hasunit -2 "Frost Queen"
+#+hasunit -2 "Frost Queen's Chosen"
+#message -1 "In a momentous triumph, the Frost Queen's Chosen has succeeded in reviving the majestic Frost Queen! The very essence of winter stirs as the Queen awakens, heralding an era of chilling dominion.^^As the Queen commands the Permafrost to weave its icy tapestry, an everlasting winter descends upon Elysium.^^Behold the frozen majesty, witness the unyielding reign — the Frost Queen's return reshapes the very fabric of the mystical realm, as eternal winter claims its rightful throne. Elysium has entered a Permanent Ice Age."
+#setvar 2001 3
+#endevent 
+#
+#squareevent
+#+turnnbr 0
+#+varequal 2001 3
+#+plane 0
+#+terrain -103
+#alterloc 54 #Frozen Waste
+#message -1 "A new age is upon us. To fight the growing darkness a Blind Prophet has chosen the King in his Castle to take upon the mythical title Heir of Elysium. The Seer proclaims, now the time has come to fulfil the long neglected holy duty of the royal line towards the people of the land. Peasants and nobles alike no longer shall fear the monsters that hunger to devour them or the tyrants that desire to enslave them."
+#setvar 1201 1
+#holdit 1
+#endevent 
+
+
+
+#Events End-----------------------------------------------------------------
+#****************************************************************************
+#****************************************************************************
